@@ -3,387 +3,289 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>せどり体験オープンチャット｜生徒同士が利益商品をシェアする場所</title>
+  <title>7日間プロに聞き放題の無料オープンチャット｜しょうた</title>
+  <meta name="description" content="月100件以上の利益商品と、平均10分で返ってくる仕入れ相談。7日間プロに聞き放題の無料オープンチャット。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
   <!--
-    差し込み枠（.slot）の見え方
-    - 通常のURL：中身の入っていない枠は表示しない
-    - URLの末尾に ?preview=1：枠を点線で表示し、何を入れるかのメモを出す（翔太さん確認用）
-    画像・動画が届いたら、その枠の .slot-empty を消して <img> / <video> を入れる。
-    申込ボタンの行き先は、ファイル末尾の LINE_ID（翔太さんの公式LINEのベーシックID）を入れると有効になる。
+    構成は誘導LPの9要素の順（03 AI_PJ/開発/tools/brain-dl/out/claudecode-launch 制作室5）
+      1 呼びかけ / 2 メインコピー / 3 ボタン1回目 / 4 参加特典 / 5 企画の中身 / 6 実績 / 7 変わること / 8 ボタン2回目 / 9 プロフィール
+
+    差し込み枠（.slot-empty）
+    - 通常のURL：中身の無い枠は表示しない
+    - 末尾に ?preview=1：枠を点線で出す（翔太さん確認用）
+    申込ボタンは、ファイル末尾の LINE_ID（翔太さんの公式LINEのベーシックID）を入れると有効になる。
   -->
   <style>
+    :root {
+      --ink: #1f2330;
+      --sub: #5b6070;
+      --line: #e7e4de;
+      --bg: #ffffff;
+      --bg-warm: #f6f4ef;
+      --accent: #f26b1d;
+      --accent-dark: #d8540b;
+      --accent-soft: #fff1e7;
+      --night: #1c2130;
+    }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; font-size: 16px; }
     body {
       font-family: 'Noto Sans JP', sans-serif;
-      color: #1a1a1a;
-      background: #fff;
-      line-height: 1.8;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.85;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
-    a { text-decoration: none; color: inherit; }
-    img, video { max-width: 100%; display: block; }
-
-    .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .wrap { max-width: 640px; margin: 0 auto; padding: 0 20px; }
     .section { padding: 72px 0; }
-    .section-title {
-      text-align: center;
-      font-size: 1.7rem;
-      font-weight: 900;
-      margin-bottom: 20px;
-      line-height: 1.45;
-      color: #1a1a2e;
-    }
-    .section-title span { color: #f77f00; }
-    .section-lead {
-      max-width: 620px;
-      margin: 0 auto 40px;
-      font-size: 0.97rem;
-      color: #444;
-    }
-    .section-lead p + p { margin-top: 14px; }
+    .section.warm { background: var(--bg-warm); }
 
-    /* ===== CTA ===== */
+    .kicker { font-size: 0.78rem; font-weight: 700; color: var(--accent-dark); letter-spacing: 0.06em; margin-bottom: 10px; }
+    .h2 { font-size: 1.5rem; font-weight: 900; line-height: 1.5; margin-bottom: 20px; letter-spacing: 0.01em; }
+    .h2 em { font-style: normal; color: var(--accent); }
+    .lead p { color: var(--sub); font-size: 0.97rem; }
+    .lead p + p { margin-top: 14px; }
+
+    /* ===== ボタン ===== */
+    .cta { text-align: center; }
+    .cta-micro { font-size: 0.9rem; font-weight: 700; margin-bottom: 12px; line-height: 1.6; }
+    .cta-micro span { background: linear-gradient(transparent 62%, #ffd9bf 62%); }
     .cta-btn {
-      display: inline-block;
-      background: linear-gradient(135deg, #f77f00, #e36414);
-      color: #fff;
-      font-size: 1.2rem;
-      font-weight: 900;
-      padding: 20px 48px;
-      border-radius: 60px;
-      box-shadow: 0 8px 24px rgba(247, 127, 0, 0.4);
-      transition: transform 0.2s, box-shadow 0.2s;
-      text-align: center;
-    }
-    .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(247, 127, 0, 0.5); }
-    .cta-btn small { display: block; font-size: 0.75rem; font-weight: 500; margin-bottom: 4px; }
-    .cta-wrap { text-align: center; padding: 8px 20px 56px; }
-    .cta-note { margin-top: 12px; font-size: 0.85rem; color: #666; }
-
-    /* ===== 差し込み枠 ===== */
-    .slot-empty { display: none; }
-    .is-preview .slot-empty {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      border: 2px dashed #f77f00;
-      background: repeating-linear-gradient(45deg, #fff8f0, #fff8f0 10px, #fff 10px, #fff 20px);
-      color: #b35900;
-      border-radius: 14px;
-      padding: 20px 14px;
-      text-align: center;
-      font-size: 0.82rem;
-      line-height: 1.5;
-      min-height: 150px;
-    }
-    .is-preview .slot-empty b { font-size: 0.9rem; color: #7a3d00; }
-    .preview-bar { display: none; }
-    .is-preview .preview-bar {
       display: block;
-      position: sticky;
-      top: 0;
-      z-index: 1001;
-      background: #7a3d00;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      background: var(--accent);
       color: #fff;
-      font-size: 0.8rem;
-      padding: 8px 16px;
-      text-align: center;
+      font-size: 1.12rem;
+      font-weight: 900;
+      padding: 18px 20px;
+      border-radius: 999px;
+      box-shadow: 0 6px 0 var(--accent-dark), 0 12px 24px rgba(242,107,29,0.25);
+      transition: transform 0.15s, box-shadow 0.15s;
     }
-    /* 中身がまだ無いセクションは、通常のURLでは丸ごと隠す */
-    [data-pending] { display: none; }
-    .is-preview [data-pending] { display: block; }
+    .cta-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--accent-dark); }
+    .cta-note { margin-top: 12px; font-size: 0.8rem; color: var(--sub); }
 
-    /* ===== Banner ===== */
-    .banner {
-      background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
-      color: #fff;
-      text-align: center;
-      padding: 52px 20px 48px;
-      position: relative;
-      overflow: hidden;
+    /* ===== 1〜3 ファーストビュー ===== */
+    .fv { background: var(--bg-warm); padding: 36px 0 48px; overflow: hidden; }
+    .fv-call {
+      display: inline-block;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--ink);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 4px;
+      margin-bottom: 18px;
     }
-    .banner::before {
+    .fv h1 { font-size: 1.6rem; font-weight: 900; line-height: 1.5; }
+    .fv h1 .num { color: var(--accent); font-size: 1.15em; }
+    .fv h1 .name {
+      display: block;
+      margin-top: 12px;
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: #fff;
+      background: var(--ink);
+      padding: 6px 14px;
+      border-radius: 6px;
+      width: fit-content;
+    }
+    .fv-body { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: center; margin-top: 26px; }
+
+    .phone {
+      position: relative;
+      width: 250px;
+      height: 470px;
+      margin: 0 auto;
+      border-radius: 36px;
+      background: #111;
+      padding: 12px;
+      box-shadow: 0 24px 48px rgba(31,35,48,0.22);
+    }
+    .phone::before {
       content: '';
       position: absolute;
-      top: -50%; left: -20%;
-      width: 140%; height: 200%;
-      background: radial-gradient(ellipse at 30% 50%, rgba(247,127,0,0.12) 0%, transparent 60%);
-      pointer-events: none;
+      top: 12px; left: 50%;
+      transform: translateX(-50%);
+      width: 84px; height: 20px;
+      background: #111;
+      border-radius: 0 0 12px 12px;
+      z-index: 2;
     }
-    .banner-inner { position: relative; max-width: 700px; margin: 0 auto; }
-    .banner-tag {
-      display: inline-block;
-      background: #f77f00;
-      color: #fff;
+    .phone-screen { width: 100%; height: 100%; border-radius: 26px; overflow: hidden; background: #8aa0b8; position: relative; }
+    .phone-screen img { width: 100%; animation: feed 26s ease-in-out infinite alternate; }
+    @keyframes feed { 0%, 8% { transform: translateY(0); } 100% { transform: translateY(calc(-100% + 446px)); } }
+    @media (prefers-reduced-motion: reduce) { .phone-screen img { animation: none; } }
+    .phone-tag {
+      position: absolute;
+      right: -14px; bottom: 60px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 8px 12px;
       font-size: 0.75rem;
-      font-weight: 900;
-      padding: 4px 16px;
-      border-radius: 4px;
-      margin-bottom: 18px;
-      letter-spacing: 0.08em;
-    }
-    .banner-main { font-size: 2.1rem; font-weight: 900; line-height: 1.35; margin-bottom: 14px; }
-    .banner-main .hl { color: #f77f00; }
-    .banner-sub {
-      font-size: 1.05rem;
       font-weight: 700;
-      color: rgba(255,255,255,0.9);
-      margin-bottom: 24px;
+      line-height: 1.5;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      z-index: 3;
     }
-    .banner-features { display: flex; justify-content: center; flex-wrap: wrap; margin-bottom: 28px; }
-    .banner-feat {
-      padding: 8px 16px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: rgba(255,255,255,0.85);
-      border-right: 1px solid rgba(255,255,255,0.15);
-      line-height: 1.3;
-    }
-    .banner-feat:last-child { border-right: none; }
-    .banner-feat strong { color: #f77f00; font-size: 1.1rem; }
+    .phone-tag b { color: var(--accent); font-size: 1rem; }
 
-    /* ===== コミュニティ ===== */
-    .community { background: #f8f9fa; }
+    .fv-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 22px; }
+    .fv-fact { background: #fff; border-radius: 12px; padding: 10px 6px; text-align: center; font-size: 0.72rem; color: var(--sub); line-height: 1.4; }
+    .fv-fact b { display: block; font-size: 1.15rem; color: var(--ink); font-weight: 900; }
+
+    /* ===== 4 特典 ===== */
+    .gift-head { font-size: 0.95rem; color: var(--sub); margin-bottom: 18px; }
+    .gift-head b { color: var(--ink); }
+    .gifts { list-style: none; counter-reset: gift; border-top: 1px solid var(--line); }
+    .gifts li { counter-increment: gift; display: grid; grid-template-columns: 44px 1fr; gap: 4px 12px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+    .gifts li::before {
+      content: counter(gift);
+      grid-row: span 2;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gifts b { font-size: 1rem; }
+    .gifts span { font-size: 0.86rem; color: var(--sub); }
+
+    /* ===== 5 中身：スクショ ===== */
     .shots {
       display: flex;
       gap: 14px;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
-      padding: 4px 20px 18px;
-      margin: 0 -20px;
+      padding: 8px 20px 20px;
+      margin: 28px -20px 0;
+      scrollbar-width: none;
     }
-    .shot {
-      flex: 0 0 78%;
-      max-width: 300px;
-      scroll-snap-align: center;
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-      overflow: hidden;
-    }
-    .shot a { display: block; height: 440px; overflow: hidden; position: relative; }
+    .shots::-webkit-scrollbar { display: none; }
+    .shot { flex: 0 0 76%; max-width: 280px; scroll-snap-align: center; }
+    .shot a { display: block; height: 400px; overflow: hidden; position: relative; border-radius: 18px; box-shadow: 0 6px 20px rgba(31,35,48,0.12); }
     .shot a::after {
       content: 'タップで全体を見る';
       position: absolute; left: 0; right: 0; bottom: 0;
-      padding: 48px 0 10px;
+      padding: 44px 0 10px;
       text-align: center;
-      font-size: 0.75rem; font-weight: 700;
+      font-size: 0.72rem; font-weight: 700;
       color: #fff;
-      background: linear-gradient(to bottom, rgba(26,26,46,0), rgba(26,26,46,0.85));
+      background: linear-gradient(to bottom, rgba(28,33,48,0), rgba(28,33,48,0.85));
     }
-    .shot img { width: 100%; }
-    .shot figcaption { padding: 12px 14px 16px; font-size: 0.84rem; color: #555; line-height: 1.6; }
-    .shot figcaption b { display: block; color: #1a1a2e; font-size: 0.92rem; margin-bottom: 2px; }
-    .shot .slot-empty { height: 440px; border-radius: 0; }
-    .shots-hint { text-align: center; font-size: 0.78rem; color: #888; margin-top: -4px; }
+    .shot figcaption { padding: 12px 4px 0; font-size: 0.84rem; color: var(--sub); line-height: 1.65; }
+    .shot figcaption b { display: block; color: var(--ink); font-size: 0.95rem; }
+    .shot .slot-empty { height: 400px; }
+    .swipe { text-align: center; font-size: 0.76rem; color: var(--sub); }
 
-    .points {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-      max-width: 640px;
-      margin: 40px auto 0;
-    }
-    .point {
-      background: #fff;
-      border-radius: 16px;
-      padding: 22px 22px;
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-    }
-    .point-num {
-      flex-shrink: 0;
-      width: 44px; height: 44px;
-      background: linear-gradient(135deg, #f77f00, #e36414);
-      color: #fff;
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 900;
-    }
-    .point h3 { font-size: 1.02rem; color: #1a1a2e; margin-bottom: 4px; line-height: 1.5; }
-    .point p { font-size: 0.88rem; color: #555; line-height: 1.7; }
+    .days { margin-top: 40px; border-left: 3px solid var(--accent); padding-left: 18px; }
+    .days h3 { font-size: 1.05rem; margin-bottom: 12px; }
+    .days dl { display: grid; grid-template-columns: auto 1fr; gap: 10px 14px; font-size: 0.92rem; }
+    .days dt { font-weight: 900; color: var(--accent-dark); white-space: nowrap; }
+    .days dd { color: var(--sub); }
 
-    /* ===== 実績 ===== */
-    .results-cards {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      max-width: 640px;
-      margin: 0 auto 24px;
+    /* ===== 6 実績 ===== */
+    .nums { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 24px; }
+    .num-card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px 10px; text-align: center; }
+    .num-card small { display: block; font-size: 0.74rem; color: var(--sub); }
+    .num-card b { display: block; font-size: 1.45rem; font-weight: 900; line-height: 1.35; }
+    .num-card b span { font-size: 0.8rem; color: var(--sub); font-weight: 500; }
+    .voice-quote {
+      margin-top: 28px;
+      background: var(--bg-warm);
+      border-radius: 18px;
+      padding: 22px 20px;
     }
-    .results-card {
-      background: linear-gradient(135deg, #1a1a2e, #0f3460);
-      color: #fff;
-      border-radius: 16px;
-      padding: 22px 12px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .results-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #f77f00, #e36414);
-    }
-    .results-from { font-size: 0.8rem; color: rgba(255,255,255,0.65); }
-    .results-amount { font-size: 1.7rem; font-weight: 900; color: #f77f00; line-height: 1.3; }
-    .results-when { font-size: 0.78rem; color: rgba(255,255,255,0.8); }
-    .results-reports {
-      max-width: 640px;
-      margin: 0 auto 24px;
-      border: 2px solid #1a1a2e;
-      border-radius: 14px;
-      padding: 18px 16px;
-      text-align: center;
-    }
-    .results-reports p { font-size: 0.85rem; color: #555; }
-    .results-reports strong { display: block; font-size: 1.3rem; color: #1a1a2e; font-weight: 900; margin-top: 4px; }
-    .results-shots { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; max-width: 640px; margin: 0 auto; }
-    .note { max-width: 640px; margin: 16px auto 0; font-size: 0.75rem; color: #888; }
-    .report-card { max-width: 640px; margin: 0 auto 20px; display: flex; gap: 16px; align-items: stretch; background: #f8f9fa; border-radius: 16px; overflow: hidden; }
-    .report-card a { flex: 0 0 42%; height: 300px; overflow: hidden; display: block; }
-    .report-card img { width: 100%; }
-    .report-card div { padding: 18px 16px 18px 0; font-size: 0.86rem; color: #555; }
-    .report-card b { display: block; color: #1a1a2e; font-size: 0.95rem; margin-bottom: 6px; }
-    .report-card strong { color: #e36414; }
-    .join-box { max-width: 420px; margin: 28px auto 0; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 20px; }
-    .join-box p { font-size: 0.88rem; color: rgba(255,255,255,0.8); }
-    .join-word { display: inline-block; margin: 10px 0 12px; background: #fff; color: #1a1a2e; font-weight: 900; font-size: 1.3rem; padding: 6px 22px; border-radius: 10px; letter-spacing: 0.05em; }
-    .copy-btn { display: block; width: 100%; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.4); border-radius: 30px; padding: 10px; font: inherit; font-size: 0.88rem; cursor: pointer; }
+    .voice-quote p { font-size: 0.95rem; line-height: 1.9; }
+    .voice-quote cite { display: block; margin-top: 10px; font-style: normal; font-size: 0.8rem; color: var(--sub); }
+    .report { display: grid; grid-template-columns: 38% 1fr; gap: 16px; margin-top: 16px; background: var(--bg-warm); border-radius: 18px; overflow: hidden; }
+    .report a { display: block; height: 260px; overflow: hidden; }
+    .report div { padding: 18px 16px 18px 0; font-size: 0.86rem; color: var(--sub); line-height: 1.75; }
+    .report b { display: block; color: var(--ink); font-size: 0.95rem; margin-bottom: 4px; }
+    .report strong { color: var(--accent-dark); }
+    .videos { display: grid; gap: 14px; margin-top: 16px; }
+    .videos .slot-empty { aspect-ratio: 16 / 9; min-height: 0; }
+    .fine { margin-top: 16px; font-size: 0.74rem; color: #8b8f99; }
 
-    /* ===== インタビュー ===== */
-    .voices { background: #f8f9fa; }
-    .voice-list { display: grid; grid-template-columns: 1fr; gap: 18px; max-width: 640px; margin: 0 auto; }
-    .voice video, .voice .slot-empty { aspect-ratio: 16 / 9; }
-    .voice-comments { display: grid; grid-template-columns: 1fr; gap: 14px; max-width: 640px; margin: 18px auto 0; }
+    /* ===== 7 変わること ===== */
+    .changes { margin-top: 8px; }
+    .change { padding: 18px 0; border-bottom: 1px solid var(--line); }
+    .change:first-child { border-top: 1px solid var(--line); }
+    .change .before { font-size: 0.86rem; color: var(--sub); }
+    .change .after { font-size: 1rem; font-weight: 700; margin-top: 4px; padding-left: 22px; position: relative; }
+    .change .after::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: 900; }
 
-    /* ===== 流れ ===== */
-    .flow { max-width: 600px; margin: 0 auto; position: relative; }
-    .flow::before {
-      content: '';
-      position: absolute;
-      left: 24px; top: 0; bottom: 0;
-      width: 3px;
-      background: linear-gradient(to bottom, #f77f00, #e36414);
-      border-radius: 2px;
-    }
-    .flow-item { position: relative; padding-left: 64px; margin-bottom: 30px; }
-    .flow-item:last-child { margin-bottom: 0; }
-    .flow-num {
-      position: absolute; left: 4px; top: 0;
-      width: 44px; height: 32px;
-      background: #f77f00;
-      color: #fff;
-      border-radius: 16px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.72rem; font-weight: 900;
-    }
-    .flow-item h3 { font-size: 1.05rem; color: #1a1a2e; margin-bottom: 4px; }
-    .flow-item p { font-size: 0.9rem; color: #555; line-height: 1.7; }
+    /* ===== 8 ボタン2回目 ===== */
+    .final { background: var(--night); color: #fff; padding: 64px 0 72px; }
+    .final .h2 { color: #fff; text-align: center; }
+    .final .cta-micro { color: #fff; }
+    .final .cta-micro span { background: linear-gradient(transparent 62%, rgba(242,107,29,0.55) 62%); }
+    .final .cta-note { color: rgba(255,255,255,0.6); }
+    .join-box { max-width: 400px; margin: 28px auto 0; border: 1px solid rgba(255,255,255,0.18); border-radius: 16px; padding: 18px; text-align: center; }
+    .join-box p { font-size: 0.84rem; color: rgba(255,255,255,0.75); }
+    .join-word { display: inline-block; margin: 10px 0 12px; background: #fff; color: var(--ink); font-weight: 900; font-size: 1.25rem; padding: 4px 22px; border-radius: 8px; letter-spacing: 0.05em; }
+    .copy-btn { display: block; width: 100%; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.4); border-radius: 999px; padding: 10px; font: inherit; font-size: 0.86rem; cursor: pointer; }
 
-    /* ===== 向いている人 ===== */
-    .fit-list { max-width: 600px; margin: 0 auto; list-style: none; }
-    .fit-list li {
-      padding: 14px 0 14px 34px;
-      border-bottom: 1px solid #eee;
-      font-size: 0.95rem;
-      position: relative;
-    }
-    .fit-list li::before {
-      content: '✓';
-      position: absolute; left: 0; top: 15px;
-      width: 22px; height: 22px;
-      background: #f77f00;
-      color: #fff;
-      border-radius: 50%;
-      font-size: 0.7rem; font-weight: 900;
-      display: flex; align-items: center; justify-content: center;
-    }
+    /* ===== 9 プロフィール ===== */
+    .profile { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    .profile img { width: 100%; border-radius: 18px; aspect-ratio: 494 / 420; object-fit: cover; }
+    .profile h3 { font-size: 1.3rem; font-weight: 900; }
+    .profile h3 small { font-size: 0.78rem; color: var(--sub); font-weight: 500; margin-left: 8px; }
+    .profile p { font-size: 0.92rem; color: var(--sub); margin-top: 8px; }
+    .profile p.kicker { color: var(--accent-dark); font-size: 0.78rem; margin: 0 0 6px; }
 
-    /* ===== 特典 ===== */
-    .bonus { background: #1a1a2e; color: #fff; }
-    .bonus .section-title { color: #fff; }
-    .bonus-list { max-width: 600px; margin: 0 auto; }
-    .bonus-item {
-      display: flex; gap: 16px; align-items: flex-start;
-      margin-bottom: 16px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 14px;
-      padding: 18px;
-    }
-    .bonus-num {
-      flex-shrink: 0;
-      width: 40px; height: 40px;
-      background: linear-gradient(135deg, #f77f00, #e36414);
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 900;
-    }
-    .bonus-item h3 { font-size: 1rem; margin-bottom: 2px; }
-    .bonus-item p { font-size: 0.85rem; color: rgba(255,255,255,0.65); line-height: 1.6; }
+    footer { text-align: center; font-size: 0.75rem; color: #8b8f99; padding: 24px 20px 110px; }
 
-    /* ===== プロフィール ===== */
-    .profile { max-width: 520px; margin: 0 auto; background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-    .profile-photo img { width: 100%; aspect-ratio: 494 / 420; object-fit: cover; }
-    .profile-body { padding: 20px 22px 24px; }
-    .profile-label { font-size: 0.75rem; font-weight: 900; color: #f77f00; letter-spacing: 0.08em; }
-    .profile h3 { font-size: 1.25rem; color: #1a1a2e; }
-    .profile p { font-size: 0.9rem; color: #555; margin-top: 8px; }
-
-    /* ===== FAQ ===== */
-    .faq { background: #f8f9fa; }
-    .faq-list { max-width: 640px; margin: 0 auto; }
-    .faq-item { background: #fff; border-radius: 14px; padding: 18px 20px; margin-bottom: 12px; }
-    .faq-item h3 { font-size: 0.95rem; color: #1a1a2e; }
-    .faq-item h3::before { content: 'Q. '; color: #f77f00; }
-    .faq-item p { font-size: 0.88rem; color: #555; margin-top: 6px; }
-
-    /* ===== Final ===== */
-    .final-cta { background: #1a1a2e; color: #fff; text-align: center; padding: 72px 20px; }
-    .final-cta h2 { font-size: 1.55rem; font-weight: 900; margin-bottom: 14px; line-height: 1.45; }
-    .final-cta .lead { color: rgba(255,255,255,0.75); margin-bottom: 30px; font-size: 0.97rem; }
-    footer { background: #111; color: rgba(255,255,255,0.4); text-align: center; padding: 24px 20px; font-size: 0.8rem; }
-
-    .floating-cta {
-      display: none;
-      position: fixed; bottom: 0; left: 0;
-      width: 100%;
-      background: rgba(26, 26, 46, 0.95);
+    .sticky {
+      position: fixed; left: 0; right: 0; bottom: 0;
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+      background: rgba(255,255,255,0.94);
       backdrop-filter: blur(8px);
-      padding: 12px 20px;
-      z-index: 1000;
-      text-align: center;
-      box-shadow: 0 -4px 16px rgba(0,0,0,0.3);
+      border-top: 1px solid var(--line);
+      z-index: 50;
+      transform: translateY(110%);
+      transition: transform 0.25s;
     }
-    .floating-cta .cta-btn { font-size: 1rem; padding: 12px 28px; width: 100%; max-width: 360px; }
+    .sticky.show { transform: translateY(0); }
+    .sticky .cta-btn { font-size: 1rem; padding: 13px 16px; box-shadow: 0 4px 0 var(--accent-dark); }
 
-    @media (max-width: 768px) {
-      .floating-cta { display: block; }
-      .final-cta { padding-bottom: 120px; }
+    /* ===== 差し込み枠 ===== */
+    .slot-empty { display: none; }
+    .is-preview .slot-empty {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+      border: 2px dashed var(--accent);
+      background: repeating-linear-gradient(45deg, #fff8f1, #fff8f1 10px, #fff 10px, #fff 20px);
+      color: #a4480c;
+      border-radius: 18px;
+      padding: 16px;
+      text-align: center;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      min-height: 140px;
     }
-    @media (max-width: 600px) {
-      .banner { padding: 40px 16px 36px; }
-      .banner-main { font-size: 1.55rem; }
-      .banner-sub { font-size: 0.95rem; }
-      .banner-feat { padding: 6px 10px; font-size: 0.75rem; }
-      .banner-feat strong { font-size: 0.95rem; }
-      .section { padding: 56px 0; }
-      .section-title { font-size: 1.3rem; }
-      .cta-btn { font-size: 1rem; padding: 18px 30px; }
-      .results-amount { font-size: 1.4rem; }
-      .final-cta h2 { font-size: 1.25rem; }
-      
+    .is-preview .slot-empty b { font-size: 0.88rem; }
+    .preview-bar { display: none; }
+    .is-preview .preview-bar { display: block; position: sticky; top: 0; z-index: 60; background: #7a3d00; color: #fff; font-size: 0.78rem; padding: 8px 16px; text-align: center; }
+    [data-pending] { display: none; }
+    .is-preview [data-pending] { display: grid; }
+
+    @media (min-width: 760px) {
+      .wrap { max-width: 720px; }
+      .fv { padding: 56px 0 64px; }
+      .fv h1 { font-size: 2.1rem; }
+      .fv-body { grid-template-columns: 1fr 260px; }
+      .phone { order: 2; }
+      .h2 { font-size: 1.8rem; }
+      .profile { grid-template-columns: 240px 1fr; align-items: center; }
+      .sticky { display: none; }
     }
   </style>
 </head>
@@ -391,44 +293,71 @@
 
 <div class="preview-bar">確認用の表示です。点線の枠は、画像・動画が届いたら差し込む場所です（通常のURLでは表示されません）</div>
 
-<!-- ===== BANNER ===== -->
-<section class="banner">
-  <div class="banner-inner">
-    <div class="banner-tag">LINE登録者限定・参加無料</div>
-    <h1 class="banner-main">
-      生徒同士が<span class="hl">利益商品を<br>毎日シェアしている</span><br>オープンチャット
+<!-- ===== 1 呼びかけ / 2 メインコピー / 3 ボタン1回目 ===== -->
+<header class="fv">
+  <div class="wrap">
+    <p class="fv-call">独学でせどりを続けていて、月10万に届いていない人へ</p>
+    <h1>
+      月<span class="num">100</span>件以上の利益商品と、<br>平均<span class="num">10</span>分で返ってくる仕入れ相談。
+      <span class="name">7日間プロに聞き放題の無料オープンチャット</span>
     </h1>
-    <p class="banner-sub">その中を、7日間だけ無料で体験できます</p>
-    <div class="banner-features">
-      <div class="banner-feat">利益商品<strong>100件+</strong>/月</div>
-      <div class="banner-feat">質問への返信<strong>平均10分</strong></div>
-      <div class="banner-feat">実践講座<strong>全4回</strong></div>
+
+    <div class="fv-body">
+      <div class="phone" aria-hidden="true">
+        <div class="phone-screen"><img src="img/share-bag.jpg" alt=""></div>
+        <div class="phone-tag">生徒の投稿<br>利益 <b>15,550円</b></div>
+      </div>
+      <div>
+        <div class="fv-facts">
+          <div class="fv-fact"><b>100件+</b>毎月の<br>利益商品</div>
+          <div class="fv-fact"><b>平均10分</b>質問への<br>返信</div>
+          <div class="fv-fact"><b>0円</b>7日間の<br>参加費</div>
+        </div>
+        <div class="cta" id="top-cta">
+          <p class="cta-micro"><span>公式LINEに「体験参加」と送るだけ。</span><br>入り方と5大特典がLINEで届きます</p>
+          <a href="#join" class="cta-btn js-join">オープンチャットに入ってみる</a>
+          <p class="cta-note">入ってから、続けるかどうかを決めてください</p>
+        </div>
+      </div>
     </div>
-    <a href="#join" class="cta-btn js-join">
-      <small>＼ 参加者全員に5大特典 ／</small>
-      オープンチャットに参加する
-    </a>
+  </div>
+</header>
+
+<!-- ===== 4 参加特典 ===== -->
+<section class="section">
+  <div class="wrap">
+    <p class="kicker">参加した人全員に</p>
+    <h2 class="h2">YouTubeでは出していない利益商品も、<br><em>入った日</em>に受け取れます</h2>
+    <p class="gift-head">公式LINEに「体験参加」と送った人に、<b>5つの特典</b>をお渡しします。</p>
+    <ol class="gifts">
+      <li><b>最短で月10万を目指すロードマップ</b><span>何を、いつ、どの順番でやるかを1本にまとめたもの</span></li>
+      <li><b>初心者向け 利益商品リスト200選</b><span>最初の仕入れで参考にしやすい商品を200個</span></li>
+      <li><b>YouTubeでは出していない利益商品</b><span>動画で紹介すると店に人が集まってしまう商品</span></li>
+      <li><b>一撃1万円Over 利益商品リスト</b><span>1つ売れれば利益が1万円を超える商品だけ</span></li>
+      <li><b>ネット仕入れ 利益商品リスト</b><span>店に行けない日でも、家から仕入れられる商品</span></li>
+    </ol>
   </div>
 </section>
 
-<!-- ===== コミュニティ ===== -->
-<section class="section community">
-  <div class="container">
-    <h2 class="section-title">中では、こんなやりとりが<br><span>毎日</span>起きています</h2>
-    <div class="section-lead">
-      <p>このオープンチャットでは、生徒が【利益商品紹介】という決まった形で、仕入れた商品と仕入れ先、利益、リサーチのポイントを投稿しています。投稿の最後に次の人を指名して、バトンのようにつないでいきます。</p>
-      <p>「外注さんにはいくら払っていますか？」といった質問に、しょうたより先に生徒が答えていることもよくあります。仕入れの話ばかりではなく、雑談も多い場所です。</p>
+<!-- ===== 5 企画の中身 ===== -->
+<section class="section warm">
+  <div class="wrap">
+    <p class="kicker">オープンチャットの中身</p>
+    <h2 class="h2">利益商品を投稿しているのは、<br><em>講師よりも生徒</em>です</h2>
+    <div class="lead">
+      <p>独学のせどりで時間を取られるのは、仕入れそのものより「何を仕入れるか」を決めるところです。店で1つずつ相場を調べて、結局買わずに帰る日もあります。</p>
+      <p>このオープンチャットでは、生徒が【利益商品紹介】という形で、仕入れた商品と店、利益、なぜ買ったかを毎日投稿しています。投稿の最後には次の人を指名する決まりがあって、バトンのように毎日つながっていく仕組みです。店に行く前に、だれかが実際に売った商品を見られます。</p>
     </div>
 
     <!-- 実際のオープンチャットのスクショ（2026-09-25 受領）。顔出しの生徒の発言が届いたら .shot を足す -->
     <div class="shots">
       <figure class="shot">
-        <a href="img/share-bag.jpg" target="_blank" rel="noopener"><img src="img/share-bag.jpg" alt="生徒による利益商品紹介。トレファクで7,000円のハンドバッグを仕入れ、メルカリで26,000円で販売、利益15,550円" loading="lazy" width="600" height="2220"></a>
-        <figcaption><b>7,000円のバッグで、利益15,550円</b>トレファクで仕入れてメルカリで販売。投稿の最後で次の人にバトンを渡すのが、ここの決まりです</figcaption>
+        <a href="img/share-bag.jpg" target="_blank" rel="noopener"><img src="img/share-bag.jpg" alt="生徒の利益商品紹介。トレファクで7,000円のハンドバッグを仕入れ、メルカリで26,000円で販売、利益15,550円" loading="lazy" width="600" height="2220"></a>
+        <figcaption><b>7,000円のバッグで、利益15,550円</b>トレファクで仕入れてメルカリで販売。最後に次の人へバトンを渡しています</figcaption>
       </figure>
       <figure class="shot">
         <a href="img/qa-outsourcing.jpg" target="_blank" rel="noopener"><img src="img/qa-outsourcing.jpg" alt="外注の相場についての質問に、2人の生徒が自分のやり方を答えているやりとり" loading="lazy" width="600" height="3046"></a>
-        <figcaption><b>質問に答えるのは、しょうただけではありません</b>外注の相場を聞いた人に、2人の生徒が自分のやり方を具体的に返しています</figcaption>
+        <figcaption><b>質問に答えるのは、しょうただけではありません</b>外注の相場を聞いた人に、2人の生徒が自分のやり方を返しています</figcaption>
       </figure>
       <figure class="shot">
         <a href="img/share-toy.jpg" target="_blank" rel="noopener"><img src="img/share-toy.jpg" alt="ホビーオフで仕入れた戦隊ロボの利益商品紹介と、ほかの生徒からのお祝いのコメント" loading="lazy" width="600" height="3259"></a>
@@ -444,196 +373,100 @@
       </figure>
       <figure class="shot"><div class="slot-empty"><b>顔出しの生徒の発言</b>リンタマさん・リュウジさん・キョウコさんなど<br>届いたらここに足す</div></figure>
     </div>
-    <p class="shots-hint">← 横にスワイプできます →</p>
+    <p class="swipe">横にスワイプできます</p>
 
-    <div class="points">
-      <div class="point">
-        <div class="point-num">1</div>
-        <div>
-          <h3>利益商品が、毎月100件以上流れてきます</h3>
-          <p>しょうたの仕入れだけでなく、生徒が見つけた商品も共有されます。電子ピアノ、おもちゃ、ブランドのバッグや財布と、ジャンルもばらばらです。</p>
-        </div>
-      </div>
-      <div class="point">
-        <div class="point-num">2</div>
-        <div>
-          <h3>店の中で迷ったら、その場で聞けます</h3>
-          <p>「これ仕入れていい？」と送ってから返信が来るまで、平均10分です。仕入れる前に確認できるので、売れ残る在庫を抱えにくくなります。</p>
-        </div>
-      </div>
-      <div class="point">
-        <div class="point-num">3</div>
-        <div>
-          <h3>過去の共有も、あとからさかのぼれます</h3>
-          <p>【利益商品紹介】で検索すると、これまでの投稿がまとめて出てきます。入った日より前の商品も、仕入れの参考にできます。</p>
-        </div>
-      </div>
-      <div class="point">
-        <div class="point-num">4</div>
-        <div>
-          <h3>情報が新しいと言われています</h3>
-          <p>参加者からは、ほかのオープンチャットより情報が新しいと言われています。毎日だれかが店に行って、今売れている商品を持ち帰ってくるからです。</p>
-        </div>
-      </div>
+    <div class="days">
+      <h3>7日間でできること</h3>
+      <dl>
+        <dt>毎日</dt><dd>しょうたと生徒が仕入れた利益商品を見る。過去の投稿も【利益商品紹介】で検索できます</dd>
+        <dt>店の中で</dt><dd>「これ仕入れていい？」と送る。返信は平均10分です</dd>
+        <dt>希望する人</dt><dd>しょうたと通話して、今の仕入れで何から直すかを一緒に決める</dd>
+      </dl>
     </div>
   </div>
 </section>
 
-<div class="cta-wrap" style="padding-top:48px;">
-  <a href="#join" class="cta-btn js-join">
-    <small>＼ 参加は無料です ／</small>
-    オープンチャットに参加する
-  </a>
-</div>
+<!-- ===== 6 実績 ===== -->
+<section class="section">
+  <div class="wrap">
+    <p class="kicker">参加している人たち</p>
+    <h2 class="h2">数ヶ月前まで、<br><em>何を仕入れたらいいか</em><br>分からなかった人たちです</h2>
+    <div class="nums">
+      <div class="num-card"><small>参加1ヶ月目</small><b>0→12万<span>円</span></b></div>
+      <div class="num-card"><small>2ヶ月目</small><b>0→32万<span>円</span></b></div>
+      <div class="num-card"><small>3ヶ月目</small><b>0→67万<span>円</span></b></div>
+      <div class="num-card"><small>シフト制の会社員</small><b>月37万<span>円</span></b></div>
+    </div>
 
-<!-- ===== 実績 ===== -->
-<section class="section" style="padding-top:0;">
-  <div class="container">
-    <h2 class="section-title">この環境から、<br><span>こんな報告</span>が届いています</h2>
-    <div class="section-lead">
-      <p>ここにいる人の多くは、数ヶ月前まで「何を仕入れたらいいかわからない」と言っていました。</p>
-    </div>
-    <div class="results-cards">
-      <div class="results-card"><div class="results-from">月0円 →</div><div class="results-amount">月12万円</div><div class="results-when">参加1ヶ月目</div></div>
-      <div class="results-card"><div class="results-from">月0円 →</div><div class="results-amount">月32万円</div><div class="results-when">2ヶ月目</div></div>
-      <div class="results-card"><div class="results-from">月0円 →</div><div class="results-amount">月67万円</div><div class="results-when">3ヶ月目</div></div>
-      <div class="results-card"><div class="results-from">シフト制の会社員</div><div class="results-amount">月37万円</div><div class="results-when">本業と両立</div></div>
-    </div>
-    <div class="results-reports">
-      <p>ほかにも、毎月こんな数字の報告があります</p>
-      <strong>月27万・月77万・月108万・月199万</strong>
-    </div>
-    <div class="report-card">
+    <blockquote class="voice-quote">
+      <p>ブランドも知らなかったのですが、しっかり利益もとれて無事売れてくれたので、自分の仕入れに自信がつけられ、物販やっぱ楽しいーと思える商品でした</p>
+      <cite>7,000円のバッグで利益15,550円を出した生徒の投稿より</cite>
+    </blockquote>
+
+    <div class="report">
       <a href="img/weekly-report.jpg" target="_blank" rel="noopener"><img src="img/weekly-report.jpg" alt="生徒の週報。9月の週ごとの売上と利益、当月累計と最高月利" loading="lazy" width="600" height="2764"></a>
-      <div><b>生徒の週報</b>毎週の売上と利益を、オープンチャットで報告している生徒もいます。この方は9月25日時点で利益<strong>243,555円</strong>、最高月利は<strong>525,799円</strong>。「60万遠い」という本音も一緒に書いてくれています。</div>
+      <div><b>うまくいかない週も書く生徒の週報</b>6月から3ヶ月続けて目標の月60万に届かず、今月4度目の挑戦中。それでも9月25日時点で利益<strong>243,555円</strong>、最高月利は<strong>525,799円</strong>です。</div>
     </div>
-    <p class="note">金額は参加者の報告にもとづく利益の額です。結果には個人差があり、利益を保証するものではありません。</p>
+
+    <!-- 生徒インタビュー（10月以降に差し込み。届くまで通常のURLでは非表示） -->
+    <div class="videos" data-pending>
+      <div class="slot-empty"><b>インタビュー動画①（MP4・5分ほど）</b>自己紹介／入る前の状態／入ってから変わったこと／良かったコンテンツ／どんな人におすすめか</div>
+      <div class="slot-empty"><b>インタビュー動画②</b>同じ5つの質問</div>
+      <div class="slot-empty" style="aspect-ratio:auto;min-height:90px;"><b>テキストコメント</b>動画が難しい生徒からLINEでもらったコメント</div>
+    </div>
+
+    <p class="fine">金額は参加者の報告にもとづく利益の額です。結果には個人差があり、利益を保証するものではありません。</p>
   </div>
 </section>
 
-<!-- ===== 生徒インタビュー（10月以降に差し込み。届くまで通常のURLでは非表示） ===== -->
-<section class="section voices" data-pending>
-  <div class="container">
-    <h2 class="section-title">参加している<span>生徒の声</span></h2>
-    <div class="section-lead">
-      <p>オープンチャットに入る前にどうだったか、入ってから何が変わったかを、生徒本人に話してもらいました。</p>
-    </div>
-    <div class="voice-list">
-      <div class="voice"><div class="slot-empty"><b>インタビュー動画①（MP4・5分ほど）</b>自己紹介／入る前の状態／入ってから変わったこと／良かったコンテンツ／どんな人におすすめか</div></div>
-      <div class="voice"><div class="slot-empty"><b>インタビュー動画②</b>同じ5つの質問</div></div>
-      <div class="voice"><div class="slot-empty"><b>インタビュー動画③（あれば）</b>同じ5つの質問</div></div>
-    </div>
-    <div class="voice-comments">
-      <div class="slot-empty" style="min-height:90px;"><b>テキストコメント</b>動画が難しい生徒さんからLINEでもらったコメントをそのまま載せます</div>
-      <div class="slot-empty" style="min-height:90px;"><b>テキストコメント</b>同上</div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== 7日間の流れ ===== -->
-<section class="section">
-  <div class="container">
-    <h2 class="section-title">無料体験の<span>7日間</span>でやること</h2>
-    <div class="flow">
-      <div class="flow-item">
-        <div class="flow-num">1日目</div>
-        <h3>公式LINEに「体験参加」と送る</h3>
-        <p>オープンチャットの入り方と、5大特典の受け取り方をLINEでお送りします。</p>
-      </div>
-      <div class="flow-item">
-        <div class="flow-num">毎日</div>
-        <h3>シェアされる利益商品を見て、迷ったら質問する</h3>
-        <p>しょうたと生徒が見つけた利益商品が流れてきます。気になる商品や、自分の仕入れで迷っていることは、そのまま質問してください。</p>
-      </div>
-      <div class="flow-item">
-        <div class="flow-num">希望者</div>
-        <h3>今の仕入れについて、しょうたと通話で話す</h3>
-        <p>使える資金と時間、今どんな商品を仕入れているかを聞いて、何から直すとよいかをお伝えします。</p>
-      </div>
+<!-- ===== 7 変わること ===== -->
+<section class="section warm">
+  <div class="wrap">
+    <p class="kicker">ひとりの仕入れと、何が違うか</p>
+    <h2 class="h2">相場を調べる時間より、<br><em>売れた実例を見る時間</em>が長くなります</h2>
+    <div class="changes">
+      <div class="change"><p class="before">何を仕入れるか、毎回ひとりで調べてから店に行く</p><p class="after">生徒が実際に売った商品を見てから店に行ける</p></div>
+      <div class="change"><p class="before">店で「これ買っていいのかな」と迷って、買わずに帰る</p><p class="after">その場で聞いて、平均10分で返事が来る</p></div>
+      <div class="change"><p class="before">1,000〜3,000円の商品ばかりで、利益が残らない</p><p class="after">1つで利益1万円を超えた商品の実例に、毎日触れられる</p></div>
+      <div class="change"><p class="before">入る前の情報は、あとから追いかけられない</p><p class="after">【利益商品紹介】で検索すれば、過去の投稿もさかのぼれる</p></div>
     </div>
   </div>
 </section>
 
-<!-- ===== 向いている人 ===== -->
-<section class="section" style="padding-top:0;">
-  <div class="container">
-    <h2 class="section-title">こんな人に<span>向いています</span></h2>
-    <ul class="fit-list">
-      <li>1人でリサーチしていて、何を仕入れたらいいか毎回迷う</li>
-      <li>1,000〜3,000円の靴などを仕入れているが、利益が少なく在庫が残りやすい</li>
-      <li>別のスクールや有料グループに入ったが、結果が出なかった</li>
-      <li>店で「これ買っていいのかな」と思った時に、聞ける人がいない</li>
-    </ul>
-  </div>
-</section>
-
-<!-- ===== 特典 ===== -->
-<section class="section bonus">
-  <div class="container">
-    <h2 class="section-title">参加者全員に<span>5大特典</span>をお渡しします</h2>
-    <div class="bonus-list">
-      <div class="bonus-item"><div class="bonus-num">1</div><div><h3>最短で月10万を目指すロードマップ</h3><p>何を、いつ、どの順番でやるかを1本の道筋にまとめました。</p></div></div>
-      <div class="bonus-item"><div class="bonus-num">2</div><div><h3>初心者向け 利益商品リスト200選</h3><p>最初の仕入れで参考にしやすい商品を200個集めたリストです。</p></div></div>
-      <div class="bonus-item"><div class="bonus-num">3</div><div><h3>YouTubeでは出していない利益商品</h3><p>動画で紹介すると店に人が集まってしまう商品を、参加者だけに公開します。</p></div></div>
-      <div class="bonus-item"><div class="bonus-num">4</div><div><h3>一撃1万円Over 利益商品リスト</h3><p>1つ売れれば利益が1万円を超える商品だけを集めました。</p></div></div>
-      <div class="bonus-item"><div class="bonus-num">5</div><div><h3>ネット仕入れ 利益商品リスト</h3><p>店に行けない日でも、家から仕入れられる商品のリストです。</p></div></div>
+<!-- ===== 8 ボタン2回目 ===== -->
+<section class="final" id="join">
+  <div class="wrap">
+    <h2 class="h2">まずは7日間、<br>中の投稿を見てみてください</h2>
+    <div class="cta">
+      <p class="cta-micro"><span>公式LINEに「体験参加」と送るだけ。</span><br>入り方と5大特典がLINEで届きます</p>
+      <a href="#join" class="cta-btn js-join">オープンチャットに入ってみる</a>
+      <p class="cta-note">7日間の参加は無料です</p>
     </div>
-  </div>
-</section>
-
-<!-- ===== プロフィール ===== -->
-<section class="section">
-  <div class="container">
-    <div class="profile">
-      <div class="profile-photo"><img src="img/profile.jpg" alt="オープンチャットを運営するしょうた" width="494" height="420" loading="lazy"></div>
-      <div class="profile-body">
-        <div class="profile-label">このオープンチャットを運営しています</div>
-        <h3>しょうた</h3>
-        <p>YouTubeでせどりの仕入れを発信している、月100万プレイヤーです。自分の仕入れを続けながら、このオープンチャットで生徒の仕入れを毎日見ています。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== FAQ ===== -->
-<section class="section faq">
-  <div class="container">
-    <h2 class="section-title">よくある質問</h2>
-    <div class="faq-list">
-      <div class="faq-item"><h3>本当に無料ですか？</h3><p>7日間の体験は無料です。途中で料金を請求することはありません。</p></div>
-      <div class="faq-item"><h3>せどりを始めたばかりでも大丈夫ですか？</h3><p>大丈夫です。今は利益商品をシェアする側にいる生徒も、入った時は「何を仕入れたらいいかわからない」状態でした。</p></div>
-      <div class="faq-item"><h3>有料の講座の案内はありますか？</h3><p>あります。7日間のあいだに、希望する方にはしょうたの講座をご案内します。入るかどうかは、中の様子を見てから決めてください。</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== FINAL ===== -->
-<section class="final-cta" id="join">
-  <div class="container">
-    <h2>まずは7日間、<br>中の様子を見てみてください</h2>
-    <p class="lead">生徒が毎日どんな商品をシェアしているかは、<br>入って見てもらうのが早いです。</p>
-    <a href="#join" class="cta-btn js-join">
-      <small>＼ 公式LINEに「体験参加」と送るだけ ／</small>
-      オープンチャットに参加する
-    </a>
     <div class="join-box">
-      <p>ボタンでLINEが開かない時は、しょうたの公式LINEにこの言葉を送ってください。</p>
+      <p>ボタンでLINEが開かない時は、しょうたの公式LINEにこの言葉を送ってください</p>
       <span class="join-word js-word">体験参加</span>
       <button type="button" class="copy-btn js-copy">「体験参加」をコピーする</button>
     </div>
   </div>
 </section>
 
-<footer>
-  <p>&copy; 2026 しょうた All Rights Reserved.</p>
-</footer>
+<!-- ===== 9 プロフィール ===== -->
+<section class="section">
+  <div class="wrap">
+    <div class="profile">
+      <img src="img/profile.jpg" alt="オープンチャットを運営するしょうた" width="494" height="420" loading="lazy">
+      <div>
+        <p class="kicker">このオープンチャットを運営しています</p>
+        <h3>しょうた<small>月100万プレイヤー</small></h3>
+        <p>自分でも店舗仕入れを続けながら、YouTubeでせどりの仕入れを発信しています。このオープンチャットでは、生徒の仕入れを毎日見て、質問に答えています。</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-<div class="floating-cta">
-  <a href="#join" class="cta-btn js-join">
-    <small>＼ 参加は無料 ／</small>
-    オープンチャットに参加する
-  </a>
-</div>
+<footer>&copy; 2026 しょうた</footer>
+
+<div class="sticky" id="sticky"><a href="#join" class="cta-btn js-join">オープンチャットに入ってみる</a></div>
 
 <script>
   // 申込：ボタンを押すと、公式LINEのトーク画面が「体験参加」入力済みで開く
@@ -655,6 +488,17 @@
       });
     });
   });
+  // 追従ボタン：最初のボタンが見えなくなってから、最後の申込欄が見えるまで出す
+  (function () {
+    var sticky = document.getElementById('sticky');
+    var top = document.getElementById('top-cta');
+    var join = document.getElementById('join');
+    if (!('IntersectionObserver' in window)) { sticky.classList.add('show'); return; }
+    var topVisible = true, joinVisible = false;
+    function update() { sticky.classList.toggle('show', !topVisible && !joinVisible); }
+    new IntersectionObserver(function (e) { topVisible = e[0].isIntersecting; update(); }).observe(top);
+    new IntersectionObserver(function (e) { joinVisible = e[0].isIntersecting; update(); }).observe(join);
+  })();
   if (/[?&]preview=1/.test(location.search)) {
     document.body.classList.add('is-preview');
   }
