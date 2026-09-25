@@ -118,10 +118,20 @@
       border-radius: 0 0 12px 12px;
       z-index: 2;
     }
-    .phone-screen { width: 100%; height: 100%; border-radius: 26px; overflow: hidden; background: #8aa0b8; position: relative; }
-    .phone-screen img { width: 100%; animation: feed 26s ease-in-out infinite alternate; }
-    @keyframes feed { 0%, 8% { transform: translateY(0); } 100% { transform: translateY(calc(-100% + 446px)); } }
-    @media (prefers-reduced-motion: reduce) { .phone-screen img { animation: none; } }
+    .phone-screen { width: 100%; height: 100%; border-radius: 26px; overflow: hidden; background: #dfe6ee; position: relative; }
+    .phone-head { position: absolute; top: 0; left: 0; right: 0; z-index: 1; background: #fff; padding: 30px 12px 8px; font-size: 0.66rem; font-weight: 700; text-align: center; border-bottom: 1px solid #e3e3e3; }
+    .phone-head small { display: block; font-weight: 500; color: #8b8f99; font-size: 0.58rem; }
+    .feed { padding: 72px 10px 10px; display: flex; flex-direction: column; gap: 10px; animation: feed 22s ease-in-out infinite alternate; }
+    @keyframes feed { 0%, 10% { transform: translateY(0); } 100% { transform: translateY(-58%); } }
+    @media (prefers-reduced-motion: reduce) { .feed { animation: none; } }
+    .mini { background: #fff; border-radius: 12px; padding: 8px 10px; font-size: 0.62rem; line-height: 1.5; box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+    .mini-top { display: flex; gap: 8px; align-items: center; }
+    .mini-top img { width: 34px; height: 34px; border-radius: 8px; object-fit: cover; }
+    .mini-who { color: #8b8f99; font-size: 0.56rem; }
+    .mini-item { font-weight: 700; }
+    .mini-profit { margin-top: 4px; font-weight: 900; font-size: 0.82rem; color: var(--accent-dark); }
+    .mini-profit span { font-size: 0.56rem; color: #8b8f99; font-weight: 500; margin-right: 4px; }
+    .mini.reply { margin-left: 18px; background: #f3f5f8; box-shadow: none; }
     .phone-tag {
       position: absolute;
       right: -14px; bottom: 60px;
@@ -170,20 +180,36 @@
       scrollbar-width: none;
     }
     .shots::-webkit-scrollbar { display: none; }
-    .shot { flex: 0 0 76%; max-width: 280px; scroll-snap-align: center; }
-    .shot a { display: block; height: 400px; overflow: hidden; position: relative; border-radius: 18px; box-shadow: 0 6px 20px rgba(31,35,48,0.12); }
-    .shot a::after {
-      content: 'タップで全体を見る';
-      position: absolute; left: 0; right: 0; bottom: 0;
-      padding: 44px 0 10px;
-      text-align: center;
-      font-size: 0.72rem; font-weight: 700;
-      color: #fff;
-      background: linear-gradient(to bottom, rgba(28,33,48,0), rgba(28,33,48,0.85));
+    .post {
+      flex: 0 0 82%;
+      max-width: 320px;
+      scroll-snap-align: center;
+      background: #fff;
+      border-radius: 20px;
+      padding: 18px 18px 16px;
+      box-shadow: 0 6px 20px rgba(31,35,48,0.08);
+      display: flex;
+      flex-direction: column;
     }
-    .shot figcaption { padding: 12px 4px 0; font-size: 0.84rem; color: var(--sub); line-height: 1.65; }
-    .shot figcaption b { display: block; color: var(--ink); font-size: 0.95rem; }
-    .shot .slot-empty { height: 400px; }
+    .post-head { display: flex; gap: 12px; align-items: center; }
+    .post-head img { width: 64px; height: 64px; border-radius: 12px; object-fit: cover; flex-shrink: 0; }
+    .post-who { font-size: 0.74rem; color: var(--sub); line-height: 1.5; }
+    .post-item { font-size: 0.95rem; font-weight: 700; line-height: 1.45; }
+    .post-profit { margin-top: 14px; display: flex; align-items: baseline; gap: 8px; }
+    .post-profit small { font-size: 0.78rem; color: var(--sub); }
+    .post-profit b { font-size: 2rem; font-weight: 900; color: var(--accent); line-height: 1.2; letter-spacing: -0.01em; }
+    .post-profit b span { font-size: 0.95rem; margin-left: 2px; }
+    .post-route { font-size: 0.84rem; color: var(--sub); margin-top: 2px; }
+    .post-quote { margin-top: 14px; padding: 12px 14px; background: var(--bg-warm); border-radius: 12px; font-size: 0.86rem; line-height: 1.75; flex: 1; }
+    .post-quote::before { content: '投稿より'; display: block; font-size: 0.7rem; font-weight: 700; color: var(--accent-dark); margin-bottom: 2px; }
+    .post-link { margin-top: 12px; font-size: 0.78rem; font-weight: 700; color: var(--sub); text-decoration: underline; text-underline-offset: 3px; }
+    .qa { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; flex: 1; }
+    .qa p { font-size: 0.85rem; line-height: 1.65; background: var(--bg-warm); border-radius: 14px 14px 14px 4px; padding: 10px 12px; }
+    .qa p.q { background: var(--ink); color: #fff; border-radius: 14px 14px 4px 14px; }
+    .qa p small { display: block; font-size: 0.7rem; opacity: 0.7; margin-bottom: 2px; }
+    .post .slot-empty { flex: 1; min-height: 300px; }
+    .slot-card { display: none; padding: 0; background: none; box-shadow: none; }
+    .is-preview .slot-card { display: flex; }
     .swipe { text-align: center; font-size: 0.76rem; color: var(--sub); }
 
     .days { margin-top: 40px; border-left: 3px solid var(--accent); padding-left: 18px; }
@@ -206,11 +232,16 @@
     }
     .voice-quote p { font-size: 0.95rem; line-height: 1.9; }
     .voice-quote cite { display: block; margin-top: 10px; font-style: normal; font-size: 0.8rem; color: var(--sub); }
-    .report { display: grid; grid-template-columns: 38% 1fr; gap: 16px; margin-top: 16px; background: var(--bg-warm); border-radius: 18px; overflow: hidden; }
-    .report a { display: block; height: 260px; overflow: hidden; }
-    .report div { padding: 18px 16px 18px 0; font-size: 0.86rem; color: var(--sub); line-height: 1.75; }
-    .report b { display: block; color: var(--ink); font-size: 0.95rem; margin-bottom: 4px; }
-    .report strong { color: var(--accent-dark); }
+    .report { margin-top: 16px; background: var(--bg-warm); border-radius: 18px; padding: 20px 18px; }
+    .report-title { font-size: 0.95rem; font-weight: 700; }
+    .report-sub { font-size: 0.84rem; color: var(--sub); margin-top: 4px; }
+    .report-weeks { margin-top: 14px; display: grid; gap: 6px; }
+    .report-week { display: grid; grid-template-columns: 7.5em 1fr auto; gap: 10px; align-items: center; font-size: 0.82rem; }
+    .report-week .bar { height: 8px; border-radius: 4px; background: var(--accent); }
+    .report-week b { font-variant-numeric: tabular-nums; }
+    .report-total { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-size: 0.86rem; }
+    .report-total b { color: var(--accent-dark); font-size: 1.1rem; }
+    .report .post-link { display: inline-block; }
     .videos { display: grid; gap: 14px; margin-top: 16px; }
     .videos .slot-empty { aspect-ratio: 16 / 9; min-height: 0; }
     .fine { margin-top: 16px; font-size: 0.74rem; color: #8b8f99; }
@@ -304,8 +335,17 @@
 
     <div class="fv-body">
       <div class="phone" aria-hidden="true">
-        <div class="phone-screen"><img src="img/share-bag.jpg" alt=""></div>
-        <div class="phone-tag">生徒の投稿<br>利益 <b>15,550円</b></div>
+        <div class="phone-screen">
+          <div class="phone-head">仕入れオープンチャット<small>今日の【利益商品紹介】</small></div>
+          <div class="feed">
+            <div class="mini"><div class="mini-top"><img src="img/thumb-bag.jpg" alt=""><div><div class="mini-who">鉛筆さん</div><div class="mini-item">RIPANI ハンドバッグ</div></div></div><div class="mini-profit"><span>利益</span>15,550円</div></div>
+            <div class="mini reply">爆益おめでとうございます！</div>
+            <div class="mini"><div class="mini-top"><img src="img/thumb-toy.jpg" alt=""><div><div class="mini-who">りんごさん</div><div class="mini-item">DX爆竜合体 2体</div></div></div><div class="mini-profit"><span>利益</span>12,100円</div></div>
+            <div class="mini"><div class="mini-top"><img src="img/thumb-piano.jpg" alt=""><div><div class="mini-who">チロルさん</div><div class="mini-item">YAMAHA 電子ピアノ</div></div></div><div class="mini-profit"><span>利益</span>5,320円</div></div>
+            <div class="mini reply">外注さんには、いくらでお願いしていますか？</div>
+            <div class="mini"><div class="mini-top"><img src="img/thumb-wallet.jpg" alt=""><div><div class="mini-who">ロケットさん</div><div class="mini-item">PRADA 三つ折り財布</div></div></div><div class="mini-profit"><span>利益</span>5,080円</div></div>
+          </div>
+        </div>
       </div>
       <div>
         <div class="fv-facts">
@@ -351,27 +391,44 @@
 
     <!-- 実際のオープンチャットのスクショ（2026-09-25 受領）。顔出しの生徒の発言が届いたら .shot を足す -->
     <div class="shots">
-      <figure class="shot">
-        <a href="img/share-bag.jpg" target="_blank" rel="noopener"><img src="img/share-bag.jpg" alt="生徒の利益商品紹介。トレファクで7,000円のハンドバッグを仕入れ、メルカリで26,000円で販売、利益15,550円" width="600" height="2220"></a>
-        <figcaption><b>7,000円のバッグで、利益15,550円</b>トレファクで仕入れてメルカリで販売。最後に次の人へバトンを渡しています</figcaption>
-      </figure>
-      <figure class="shot">
-        <a href="img/qa-outsourcing.jpg" target="_blank" rel="noopener"><img src="img/qa-outsourcing.jpg" alt="外注の相場についての質問に、2人の生徒が自分のやり方を答えているやりとり" width="600" height="3046"></a>
-        <figcaption><b>質問に答えるのは、しょうただけではありません</b>外注の相場を聞いた人に、2人の生徒が自分のやり方を返しています</figcaption>
-      </figure>
-      <figure class="shot">
-        <a href="img/share-toy.jpg" target="_blank" rel="noopener"><img src="img/share-toy.jpg" alt="ホビーオフで仕入れた戦隊ロボの利益商品紹介と、ほかの生徒からのお祝いのコメント" width="600" height="3259"></a>
-        <figcaption><b>戦隊ロボ2体で、利益12,100円</b>ホビーオフで仕入れ。ほかの生徒から「爆益おめでとうございます」</figcaption>
-      </figure>
-      <figure class="shot">
-        <a href="img/share-piano.jpg" target="_blank" rel="noopener"><img src="img/share-piano.jpg" alt="オフハウスで仕入れた電子ピアノの利益商品紹介。利益5,320円" width="600" height="1728"></a>
-        <figcaption><b>7,700円の電子ピアノで、利益5,320円</b>オフハウスで仕入れ。梱包のしかたまで書いてくれました</figcaption>
-      </figure>
-      <figure class="shot">
-        <a href="img/share-wallet.jpg" target="_blank" rel="noopener"><img src="img/share-wallet.jpg" alt="セカンドストリートオンラインで仕入れたブランド財布の利益商品紹介と、生徒の雑談" width="600" height="2420"></a>
-        <figcaption><b>ネットで仕入れた財布で、利益5,080円</b>セカストオンラインで仕入れ。その下では休日の雑談も</figcaption>
-      </figure>
-      <figure class="shot"><div class="slot-empty"><b>顔出しの生徒の発言</b>リンタマさん・リュウジさん・キョウコさんなど<br>届いたらここに足す</div></figure>
+      <article class="post">
+        <div class="post-head"><img src="img/thumb-bag.jpg" alt="RIPANIのシルバーのハンドバッグ" width="64" height="64"><div><div class="post-who">鉛筆さんの利益商品紹介</div><div class="post-item">RIPANI ハンドバッグ 2way</div></div></div>
+        <div class="post-profit"><small>利益</small><b>15,550<span>円</span></b></div>
+        <p class="post-route">トレファクで7,000円 → メルカリで26,000円</p>
+        <p class="post-quote">薄利になってしまうかもだけど、反応が良さそうだからいけるんじゃないかと思って仕入れました！</p>
+        <a class="post-link" href="img/share-bag.jpg" target="_blank" rel="noopener">実際の投稿を見る</a>
+      </article>
+      <article class="post">
+        <div class="post-who">生徒同士のやりとり</div>
+        <div class="qa">
+          <p class="q"><small>電灯さん</small>外注で出品〜梱包発送まで、いくらでお願いしていますか？</p>
+          <p><small>鉛筆さん</small>撮影出品、梱包発送で大体相場は1商品500〜600円くらいですね！</p>
+          <p><small>山さん</small>近所の方に手伝ってもらって、400円で写真撮影と梱包発送してもらってます！</p>
+        </div>
+        <a class="post-link" href="img/qa-outsourcing.jpg" target="_blank" rel="noopener">実際のやりとりを見る</a>
+      </article>
+      <article class="post">
+        <div class="post-head"><img src="img/thumb-toy.jpg" alt="ホビーオフで仕入れた戦隊ロボのおもちゃ" width="64" height="64"><div><div class="post-who">りんごさんの利益商品紹介</div><div class="post-item">DX爆竜合体 アバレンオー・キラーオー</div></div></div>
+        <div class="post-profit"><small>利益</small><b>12,100<span>円</span></b></div>
+        <p class="post-route">ホビーオフで2体20,900円 → 合体させて出品</p>
+        <p class="post-quote">動作しないと書いてありますが念の為に確認。電池を入れたら動いたので動作品として販売しました</p>
+        <a class="post-link" href="img/share-toy.jpg" target="_blank" rel="noopener">実際の投稿を見る</a>
+      </article>
+      <article class="post">
+        <div class="post-head"><img src="img/thumb-piano.jpg" alt="オフハウスの店頭で7,700円の値札がついた電子ピアノ" width="64" height="64"><div><div class="post-who">チロルさんの利益商品紹介</div><div class="post-item">YAMAHA 電子ピアノ ピアジェーロ</div></div></div>
+        <div class="post-profit"><small>利益</small><b>5,320<span>円</span></b></div>
+        <p class="post-route">オフハウスで7,700円 → フリマサイトで販売</p>
+        <p class="post-quote">動作も問題なくスタンド、別売りペダルがついているので負けはないと感じ仕入れました</p>
+        <a class="post-link" href="img/share-piano.jpg" target="_blank" rel="noopener">実際の投稿を見る</a>
+      </article>
+      <article class="post">
+        <div class="post-head"><img src="img/thumb-wallet.jpg" alt="PRADAの黒の三つ折り財布" width="64" height="64"><div><div class="post-who">ロケットさんの利益商品紹介</div><div class="post-item">PRADA 三つ折り財布</div></div></div>
+        <div class="post-profit"><small>利益</small><b>5,080<span>円</span></b></div>
+        <p class="post-route">セカストオンラインで11,990円 → メルカリで20,000円</p>
+        <p class="post-quote">若干内側に使用感がありますが、破れなどなく、外観が綺麗だったので、少し金額が高いと感じつつ仕入れました！</p>
+        <a class="post-link" href="img/share-wallet.jpg" target="_blank" rel="noopener">実際の投稿を見る</a>
+      </article>
+      <article class="post slot-card"><div class="slot-empty"><b>顔出しの生徒の発言</b>リンタマさん・リュウジさん・キョウコさんなど<br>届いたらここに足す</div></article>
     </div>
     <p class="swipe">横にスワイプできます</p>
 
@@ -404,8 +461,15 @@
     </blockquote>
 
     <div class="report">
-      <a href="img/weekly-report.jpg" target="_blank" rel="noopener"><img src="img/weekly-report.jpg" alt="生徒の週報。9月の週ごとの売上と利益、当月累計と最高月利" width="600" height="2764"></a>
-      <div><b>うまくいかない週も書く生徒の週報</b>6月から3ヶ月続けて目標の月60万に届かず、今月4度目の挑戦中。それでも9月25日時点で利益<strong>243,555円</strong>、最高月利は<strong>525,799円</strong>です。</div>
+      <p class="report-title">うまくいかない週も書く、ロケットさんの週報</p>
+      <p class="report-sub">6月から3ヶ月続けて目標の月60万に届かず、9月は4度目の挑戦中。最高月利は525,799円です。</p>
+      <div class="report-weeks">
+        <div class="report-week"><span>9/1〜4</span><span class="bar" style="width:36%"></span><b>38,481円</b></div>
+        <div class="report-week"><span>9/5〜11</span><span class="bar" style="width:100%"></span><b>107,538円</b></div>
+        <div class="report-week"><span>9/12〜18</span><span class="bar" style="width:91%"></span><b>97,536円</b></div>
+      </div>
+      <div class="report-total"><span>9月の利益（25日時点）</span><b>243,555円</b></div>
+      <a class="post-link" href="img/weekly-report.jpg" target="_blank" rel="noopener">実際の週報を見る</a>
     </div>
 
     <!-- 生徒インタビュー（10月以降に差し込み。届くまで通常のURLでは非表示） -->
