@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>7日間プロに聞き放題の無料オープンチャット｜しょうた</title>
-  <meta name="description" content="月100件以上の利益商品と、平均10分で返ってくる仕入れ相談。7日間プロに聞き放題の無料オープンチャット。">
+  <title>7日間プロに聞き放題｜利益商品が毎日流れてくるオープンチャットへのご招待</title>
+  <meta name="description" content="7日間プロに聞き放題。毎日、利益商品が流れてくるオープンチャットへご招待します。参加費0円。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -44,9 +44,30 @@
     .wrap { max-width: 640px; margin: 0 auto; padding: 0 20px; }
     .section { padding: 72px 0; }
     .section.warm { background: var(--bg-warm); }
+    .section.dark { background: radial-gradient(circle at 100% 0%, rgba(242,107,29,0.28), transparent 45%), var(--night); color: #fff; }
+    .dark .kicker { color: #ffb384; }
+    .dark .kicker[data-en]::before { color: rgba(255,255,255,0.08); }
+    .dark .h2 em { background: none; color: var(--accent); }
+    .dark .gift-head { color: rgba(255,255,255,0.72); }
+    .dark .gift-head b { color: #fff; }
+    .dark .gifts { border-color: rgba(255,255,255,0.14); }
+    .dark .gifts li { border-color: rgba(255,255,255,0.14); }
+    .dark .gifts li::before { background: var(--accent); color: #fff; }
+    .dark .gifts span { color: rgba(255,255,255,0.65); }
 
-    .kicker { font-size: 0.78rem; font-weight: 700; color: var(--accent-dark); letter-spacing: 0.06em; margin-bottom: 10px; }
-    .h2 { font-size: 1.5rem; font-weight: 900; line-height: 1.5; margin-bottom: 20px; letter-spacing: 0.01em; }
+    .kicker { font-size: 0.8rem; font-weight: 700; color: var(--accent-dark); letter-spacing: 0.06em; margin-bottom: 10px; }
+    .kicker[data-en]::before {
+      content: attr(data-en);
+      display: block;
+      font-size: 3rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      color: rgba(242,107,29,0.14);
+      margin-bottom: -18px;
+    }
+    .h2 { font-size: 1.62rem; font-weight: 900; line-height: 1.5; margin-bottom: 20px; letter-spacing: 0.01em; }
+    .h2 em { background: linear-gradient(transparent 64%, #ffe1cc 64%); }
     .h2 em { font-style: normal; color: var(--accent); }
     .lead p { color: var(--sub); font-size: 0.97rem; }
     .lead p + p { margin-top: 14px; }
@@ -72,31 +93,68 @@
     .cta-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--accent-dark); }
     .cta-note { margin-top: 12px; font-size: 0.8rem; color: var(--sub); }
 
-    /* ===== 1〜3 ファーストビュー ===== */
-    .fv { background: var(--bg-warm); padding: 36px 0 48px; overflow: hidden; }
+    /* ===== 1〜3 ファーストビュー（招待状） ===== */
+    .fv {
+      color: #fff;
+      padding: 30px 0 52px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 85% 8%, rgba(242,107,29,0.42), transparent 42%),
+        radial-gradient(circle at 0% 85%, rgba(242,107,29,0.2), transparent 40%),
+        radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px) 0 0 / 16px 16px,
+        var(--night);
+    }
     .fv-call {
       display: inline-block;
       font-size: 0.86rem;
       font-weight: 700;
-      color: var(--ink);
-      border-bottom: 2px solid var(--accent);
-      padding-bottom: 4px;
+      line-height: 1.6;
+      border-left: 3px solid var(--accent);
+      padding-left: 10px;
       margin-bottom: 18px;
+      color: rgba(255,255,255,0.9);
     }
-    .fv h1 { font-size: 1.6rem; font-weight: 900; line-height: 1.5; }
-    .fv h1 .num { color: var(--accent); font-size: 1.15em; }
-    .fv h1 .name {
-      display: block;
-      margin-top: 12px;
-      font-size: 1.05rem;
-      font-weight: 900;
+    .ticket {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 86px;
+      background: #fffaf3;
+      color: var(--ink);
+      border-radius: 18px;
+      box-shadow: 0 22px 44px rgba(0,0,0,0.4);
+    }
+    .ticket::before, .ticket::after {
+      content: '';
+      position: absolute;
+      right: 75px;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--night);
+    }
+    .ticket::before { top: -11px; }
+    .ticket::after { bottom: -11px; }
+    .ticket-main { padding: 20px 14px 22px 18px; border-right: 2px dashed #e3d4bf; }
+    .ticket-label { font-size: 0.72rem; font-weight: 900; letter-spacing: 0.22em; color: var(--accent); }
+    .ticket-label span { letter-spacing: 0.02em; color: var(--sub); margin-left: 6px; font-weight: 700; }
+    .fv h1 { margin-top: 8px; line-height: 1.35; font-weight: 900; }
+    .h1-a { display: block; font-size: 1.9rem; letter-spacing: -0.01em; }
+    .h1-a em { font-style: normal; color: #fff; background: var(--accent); padding: 0 6px; border-radius: 4px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+    .h1-b { display: block; margin-top: 10px; font-size: 1.12rem; }
+    .h1-b b { color: var(--accent); }
+    .h1-c { display: block; font-size: 1.45rem; }
+    .ticket-stub {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: linear-gradient(180deg, var(--accent), var(--accent-dark));
       color: #fff;
-      background: var(--ink);
-      padding: 6px 14px;
-      border-radius: 6px;
-      width: fit-content;
+      border-radius: 0 18px 18px 0;
+      text-align: center;
+      line-height: 1.2;
+      padding: 10px 4px;
     }
-    .fv-body { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: center; margin-top: 26px; }
+    .ticket-stub small { font-size: 0.68rem; font-weight: 700; opacity: 0.9; }
+    .ticket-stub b { font-size: 2.6rem; font-weight: 900; line-height: 1.05; margin: 4px 0; }
+    .ticket-stub b span { font-size: 0.9rem; }
+    .fv-body { display: grid; grid-template-columns: 1fr; gap: 30px; align-items: center; margin-top: 34px; }
 
     .phone {
       position: relative;
@@ -106,7 +164,7 @@
       border-radius: 36px;
       background: #111;
       padding: 12px;
-      box-shadow: 0 24px 48px rgba(31,35,48,0.22);
+      box-shadow: 0 24px 48px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.12);
     }
     .phone::before {
       content: '';
@@ -118,7 +176,7 @@
       border-radius: 0 0 12px 12px;
       z-index: 2;
     }
-    .phone-screen { width: 100%; height: 100%; border-radius: 26px; overflow: hidden; background: #dfe6ee; position: relative; }
+    .phone-screen { width: 100%; height: 100%; border-radius: 26px; overflow: hidden; background: #dfe6ee; position: relative; color: var(--ink); }
     .phone-head { position: absolute; top: 0; left: 0; right: 0; z-index: 1; background: #fff; padding: 30px 12px 8px; font-size: 0.66rem; font-weight: 700; text-align: center; border-bottom: 1px solid #e3e3e3; }
     .phone-head small { display: block; font-weight: 500; color: #8b8f99; font-size: 0.58rem; }
     .feed { padding: 72px 10px 10px; display: flex; flex-direction: column; gap: 10px; animation: feed 22s ease-in-out infinite alternate; }
@@ -147,8 +205,12 @@
     .phone-tag b { color: var(--accent); font-size: 1rem; }
 
     .fv-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 22px; }
-    .fv-fact { background: #fff; border-radius: 12px; padding: 10px 6px; text-align: center; font-size: 0.72rem; color: var(--sub); line-height: 1.4; }
-    .fv-fact b { display: block; font-size: 1.15rem; color: var(--ink); font-weight: 900; }
+    .fv-fact { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 12px 6px; text-align: center; font-size: 0.72rem; color: rgba(255,255,255,0.72); line-height: 1.4; }
+    .fv-fact b { display: block; font-size: 1.25rem; color: #fff; font-weight: 900; }
+    .fv-fact b i { font-style: normal; color: var(--accent); }
+    .fv .cta-micro { color: #fff; }
+    .fv .cta-micro span { background: linear-gradient(transparent 62%, rgba(242,107,29,0.6) 62%); }
+    .fv .cta-note { color: rgba(255,255,255,0.65); }
 
     /* ===== 4 特典 ===== */
     .gift-head { font-size: 0.95rem; color: var(--sub); margin-bottom: 18px; }
@@ -220,10 +282,10 @@
 
     /* ===== 6 実績 ===== */
     .nums { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 24px; }
-    .num-card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px 10px; text-align: center; }
-    .num-card small { display: block; font-size: 0.74rem; color: var(--sub); }
-    .num-card b { display: block; font-size: 1.45rem; font-weight: 900; line-height: 1.35; }
-    .num-card b span { font-size: 0.8rem; color: var(--sub); font-weight: 500; }
+    .num-card { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: #fff; border-radius: 14px; padding: 16px 10px; text-align: center; box-shadow: 0 8px 18px rgba(242,107,29,0.25); }
+    .num-card small { display: block; font-size: 0.74rem; opacity: 0.9; }
+    .num-card b { display: block; font-size: 1.6rem; font-weight: 900; line-height: 1.3; }
+    .num-card b span { font-size: 0.8rem; font-weight: 700; opacity: 0.9; }
     .voice-quote {
       margin-top: 28px;
       background: var(--bg-warm);
@@ -250,12 +312,12 @@
     .changes { margin-top: 8px; }
     .change { padding: 18px 0; border-bottom: 1px solid var(--line); }
     .change:first-child { border-top: 1px solid var(--line); }
-    .change .before { font-size: 0.86rem; color: var(--sub); }
-    .change .after { font-size: 1rem; font-weight: 700; margin-top: 4px; padding-left: 22px; position: relative; }
+    .change .before { font-size: 0.86rem; color: #9a9ea8; text-decoration: line-through; text-decoration-color: rgba(154,158,168,0.7); }
+    .change .after { font-size: 1.05rem; font-weight: 900; margin-top: 6px; padding-left: 24px; position: relative; }
     .change .after::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: 900; }
 
     /* ===== 8 ボタン2回目 ===== */
-    .final { background: var(--night); color: #fff; padding: 64px 0 72px; }
+    .final { background: radial-gradient(circle at 50% 0%, rgba(242,107,29,0.35), transparent 55%), var(--night); color: #fff; padding: 64px 0 72px; }
     .final .h2 { color: #fff; text-align: center; }
     .final .cta-micro { color: #fff; }
     .final .cta-micro span { background: linear-gradient(transparent 62%, rgba(242,107,29,0.55) 62%); }
@@ -309,7 +371,11 @@
     @media (min-width: 760px) {
       .wrap { max-width: 720px; }
       .fv { padding: 56px 0 64px; }
-      .fv h1 { font-size: 2.1rem; }
+      .h1-a { font-size: 2.4rem; }
+      .h1-b { font-size: 1.3rem; }
+      .h1-c { font-size: 1.8rem; }
+      .ticket { grid-template-columns: 1fr 120px; }
+      .ticket::before, .ticket::after { right: 109px; }
       .fv-body { grid-template-columns: 1fr 260px; }
       .phone { order: 2; }
       .h2 { font-size: 1.8rem; }
@@ -325,11 +391,18 @@
 <!-- ===== 1 呼びかけ / 2 メインコピー / 3 ボタン1回目 ===== -->
 <header class="fv">
   <div class="wrap">
-    <p class="fv-call">独学でせどりを続けていて、月10万に届いていない人へ</p>
-    <h1>
-      月<span class="num">100</span>件以上の利益商品と、<br>平均<span class="num">10</span>分で返ってくる仕入れ相談。
-      <span class="name">7日間プロに聞き放題の無料オープンチャット</span>
-    </h1>
+    <p class="fv-call">独学でせどりを続けていて、<br>月10万に届いていない人へ</p>
+    <div class="ticket">
+      <div class="ticket-main">
+        <p class="ticket-label">INVITATION<span>公式LINEの友だちへ</span></p>
+        <h1>
+          <span class="h1-a">7日間 <em>プロに聞き放題</em></span>
+          <span class="h1-b">毎日、<b>利益商品</b>が流れてくる</span>
+          <span class="h1-c">オープンチャットへ<br>ご招待します</span>
+        </h1>
+      </div>
+      <div class="ticket-stub"><small>参加費</small><b>0<span>円</span></b><small>7日間</small></div>
+    </div>
 
     <div class="fv-body">
       <div class="phone" aria-hidden="true">
@@ -347,9 +420,9 @@
       </div>
       <div>
         <div class="fv-facts">
-          <div class="fv-fact"><b>100件+</b>毎月の<br>利益商品</div>
-          <div class="fv-fact"><b>平均10分</b>質問への<br>返信</div>
-          <div class="fv-fact"><b>0円</b>7日間の<br>参加費</div>
+          <div class="fv-fact"><b><i>100</i>件+</b>毎月の<br>利益商品</div>
+          <div class="fv-fact"><b>平均<i>10</i>分</b>質問への<br>返信</div>
+          <div class="fv-fact"><b><i>全4</i>回</b>実践講座と<br>質問し放題</div>
         </div>
         <div class="cta" id="top-cta">
           <p class="cta-micro"><span>申し込みは、LINEに届いている</span><br><span>申し込みフォームから</span></p>
@@ -362,10 +435,10 @@
 </header>
 
 <!-- ===== 4 参加特典 ===== -->
-<section class="section">
+<section class="section dark">
   <div class="wrap">
-    <p class="kicker">参加した人全員に</p>
-    <h2 class="h2">YouTubeでは出していない利益商品も、<br><em>参加者全員</em>に渡します</h2>
+    <p class="kicker" data-en="BONUS">参加した人全員に</p>
+    <h2 class="h2">YouTubeでは出していない<br>利益商品も、<em>参加者全員</em>に<br>渡します</h2>
     <p class="gift-head">7日間の体験に申し込んだ人全員に、<b>5つの特典</b>をお渡しします。</p>
     <ol class="gifts">
       <li><b>最短で月10万を目指すロードマップ</b><span>何を、いつ、どの順番でやるかを1本にまとめたもの</span></li>
@@ -380,7 +453,7 @@
 <!-- ===== 5 企画の中身 ===== -->
 <section class="section warm">
   <div class="wrap">
-    <p class="kicker">オープンチャットの中身</p>
+    <p class="kicker" data-en="INSIDE">オープンチャットの中身</p>
     <h2 class="h2">利益商品を投稿しているのは、<br><em>講師よりも生徒</em>です</h2>
     <div class="lead">
       <p>独学のせどりで時間を取られるのは、仕入れそのものより「何を仕入れるか」を決めるところです。店で1つずつ相場を調べて、結局買わずに帰る日もあります。</p>
@@ -444,7 +517,7 @@
 <!-- ===== 6 実績 ===== -->
 <section class="section">
   <div class="wrap">
-    <p class="kicker">参加している人たち</p>
+    <p class="kicker" data-en="MEMBERS">参加している人たち</p>
     <h2 class="h2">数ヶ月前まで、<br><em>何を仕入れたらいいか</em><br>分からなかった人たちです</h2>
     <div class="nums">
       <div class="num-card"><small>参加1ヶ月目</small><b>0→12万<span>円</span></b></div>
@@ -484,7 +557,7 @@
 <!-- ===== 7 変わること ===== -->
 <section class="section warm">
   <div class="wrap">
-    <p class="kicker">ひとりの仕入れと、何が違うか</p>
+    <p class="kicker" data-en="CHANGE">ひとりの仕入れと、何が違うか</p>
     <h2 class="h2">相場を調べる時間より、<br><em>売れた実例を見る時間</em>が長くなります</h2>
     <div class="changes">
       <div class="change"><p class="before">何を仕入れるか、毎回ひとりで調べてから店に行く</p><p class="after">生徒が実際に売った商品を見てから店に行ける</p></div>
