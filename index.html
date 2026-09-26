@@ -7,10 +7,11 @@
   <meta name="description" content="7日間プロに聞き放題。毎日、利益商品が流れてくるオープンチャットへご招待します。参加費0円。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
   <!--
     構成は誘導LPの9要素の順（03 AI_PJ/開発/tools/brain-dl/out/claudecode-launch 制作室5）
       1 呼びかけ / 2 メインコピー / 3 ボタン1回目 / 4 参加特典 / 5 企画の中身 / 6 実績 / 7 変わること / 8 ボタン2回目 / 9 プロフィール
+    見た目は、リユース店の値札・見切りPOP・レシートを下敷きにしている（anthropics/skills の frontend-design の進め方を参考）
 
     差し込み枠（.slot-empty）
     - 通常のURL：中身の無い枠は表示しない
@@ -19,348 +20,305 @@
   -->
   <style>
     :root {
-      --ink: #1f2330;
-      --sub: #5b6070;
-      --line: #e7e4de;
-      --bg: #ffffff;
-      --bg-warm: #f6f4ef;
-      --accent: #f26b1d;
-      --accent-dark: #d8540b;
-      --accent-soft: #fff1e7;
-      --night: #1c2130;
+      --tag: #ffe000;      /* 値札の黄色 */
+      --red: #e60012;      /* 見切りPOPの赤 */
+      --ink: #000000;
+      --body: #2b2b2b;
+      --mute: #6f6f6f;
+      --paper: #ffffff;
+      --shelf: #ededed;    /* 店の棚 */
+      --line: #06c755;     /* LINEのボタン */
+      --line-dark: #04a846;
     }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; font-size: 16px; }
     body {
-      font-family: 'Noto Sans JP', sans-serif;
-      color: var(--ink);
-      background: var(--bg);
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      font-weight: 500;
+      color: var(--body);
+      background: var(--paper);
       line-height: 1.85;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
     a { color: inherit; text-decoration: none; }
     img { max-width: 100%; height: auto; display: block; }
-    .wrap { max-width: 640px; margin: 0 auto; padding: 0 20px; }
-    .section { padding: 72px 0; }
-    .section.warm { background: var(--bg-warm); }
-    .section.dark { background: radial-gradient(circle at 100% 0%, rgba(242,107,29,0.28), transparent 45%), var(--night); color: #fff; }
-    .dark .kicker { color: #ffb384; }
-    .dark .kicker[data-en]::before { color: rgba(255,255,255,0.08); }
-    .dark .h2 em { background: none; color: var(--accent); }
-    .dark .gift-head { color: rgba(255,255,255,0.72); }
-    .dark .gift-head b { color: #fff; }
-    .dark .gifts { border-color: rgba(255,255,255,0.14); }
-    .dark .gifts li { border-color: rgba(255,255,255,0.14); }
-    .dark .gifts li::before { background: var(--accent); color: #fff; }
-    .dark .gifts span { color: rgba(255,255,255,0.65); }
+    :focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+    .wrap { max-width: 600px; margin: 0 auto; padding: 0 20px; }
+    .pop { font-family: 'Dela Gothic One', sans-serif; font-weight: 400; color: var(--ink); letter-spacing: 0.01em; }
 
-    .kicker { font-size: 0.8rem; font-weight: 700; color: var(--accent-dark); letter-spacing: 0.06em; margin-bottom: 10px; }
-    .kicker[data-en]::before {
-      content: attr(data-en);
-      display: block;
-      font-size: 3rem;
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: 0.02em;
-      color: rgba(242,107,29,0.14);
-      margin-bottom: -18px;
-    }
-    .h2 { font-size: 1.62rem; font-weight: 900; line-height: 1.5; margin-bottom: 20px; letter-spacing: 0.01em; }
-    .h2 em { background: linear-gradient(transparent 64%, #ffe1cc 64%); }
-    .h2 em { font-style: normal; color: var(--accent); }
-    .lead p { color: var(--sub); font-size: 0.97rem; }
-    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 4px 0 24px; }
-    .stat { background: var(--night); color: #fff; border-radius: 14px; padding: 14px 4px 12px; text-align: center; line-height: 1.3; }
-    .stat b { display: block; font-size: 1.3rem; font-weight: 900; color: var(--accent); letter-spacing: -0.01em; }
-    .stat b span { font-size: 0.72rem; color: #fff; margin-left: 1px; }
-    .stat small { display: block; margin-top: 4px; font-size: 0.68rem; color: rgba(255,255,255,0.75); }
-    .lead p + p { margin-top: 14px; }
+    .block { padding: 64px 0; }
+    .block-yellow { background: var(--tag); }
+    .block-shelf { background: var(--shelf); }
 
-    /* ===== ボタン ===== */
+    .h2 { font-family: 'Dela Gothic One', sans-serif; font-weight: 400; color: var(--ink); font-size: 1.55rem; line-height: 1.5; margin-bottom: 22px; }
+    .h2 .red { color: var(--red); }
+    .text p { font-size: 1rem; }
+    .text p + p { margin-top: 14px; }
+
+    /* ===== LINEボタン ===== */
     .cta { text-align: center; }
-    .cta-micro { font-size: 0.9rem; font-weight: 700; margin-bottom: 12px; line-height: 1.6; }
-    .cta-micro span { background: linear-gradient(transparent 62%, #ffd9bf 62%); }
-    .cta-btn {
-      display: block;
+    .cta-micro { font-weight: 900; font-size: 0.98rem; color: var(--ink); margin-bottom: 10px; line-height: 1.6; }
+    .btn-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
       width: 100%;
-      max-width: 400px;
+      max-width: 420px;
       margin: 0 auto;
-      background: var(--accent);
+      background: var(--line);
       color: #fff;
-      font-size: 1.12rem;
       font-weight: 900;
-      padding: 18px 20px;
-      border-radius: 999px;
-      box-shadow: 0 6px 0 var(--accent-dark), 0 12px 24px rgba(242,107,29,0.25);
-      transition: transform 0.15s, box-shadow 0.15s;
+      font-size: 1.15rem;
+      padding: 18px 16px;
+      border-radius: 10px;
+      box-shadow: 0 5px 0 var(--line-dark);
+      transition: transform 0.12s, box-shadow 0.12s;
     }
-    .cta-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--accent-dark); }
-    .cta-note { margin-top: 12px; font-size: 0.8rem; color: var(--sub); }
+    .btn-line:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--line-dark); }
+    .btn-line svg { width: 26px; height: 26px; flex-shrink: 0; }
+    .cta-note { margin-top: 12px; font-size: 0.84rem; font-weight: 700; color: var(--ink); }
 
-    /* ===== 1〜3 ファーストビュー（招待状） ===== */
-    .fv {
+    /* ===== 1〜3 ファーストビュー ===== */
+    .hero { background: var(--tag); padding: 0 0 44px; overflow: hidden; position: relative; }
+    .hero-call {
+      background: var(--red);
       color: #fff;
-      padding: 30px 0 52px;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at 85% 8%, rgba(242,107,29,0.42), transparent 42%),
-        radial-gradient(circle at 0% 85%, rgba(242,107,29,0.2), transparent 40%),
-        radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px) 0 0 / 16px 16px,
-        var(--night);
+      font-weight: 900;
+      font-size: 0.92rem;
+      text-align: center;
+      padding: 10px 16px;
+      line-height: 1.5;
     }
-    .fv-call {
-      display: inline-block;
-      font-size: 0.86rem;
-      font-weight: 700;
-      line-height: 1.6;
-      border-left: 3px solid var(--accent);
-      padding-left: 10px;
-      margin-bottom: 18px;
-      color: rgba(255,255,255,0.9);
-    }
-    .ticket {
-      position: relative;
-      display: grid;
-      grid-template-columns: 1fr 86px;
-      background: #fffaf3;
+    .hero-head { position: relative; padding-top: 28px; }
+    .hero h1 { font-family: 'Dela Gothic One', sans-serif; font-weight: 400; color: var(--ink); line-height: 1.12; }
+    .hero h1 .big { display: block; font-size: 3.5rem; letter-spacing: -0.01em; }
+    .hero h1 .big .red { color: var(--red); }
+    .hero h1 .sub { display: block; margin-top: 16px; font-size: 1.35rem; line-height: 1.5; }
+    .hero h1 .sub u { text-decoration: none; background: #fff; padding: 0 6px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+
+    .price-tag {
+      position: absolute;
+      top: 34px;
+      right: -4px;
+      width: 116px;
+      padding: 12px 6px 12px 22px;
+      background: #fff;
       color: var(--ink);
-      border-radius: 18px;
-      box-shadow: 0 22px 44px rgba(0,0,0,0.4);
+      text-align: center;
+      line-height: 1.15;
+      clip-path: polygon(18px 0, 100% 0, 100% 100%, 18px 100%, 0 50%);
+      transform: rotate(8deg);
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.18));
     }
-    .ticket::before, .ticket::after {
+    .price-tag::before {
       content: '';
       position: absolute;
-      right: 75px;
-      width: 22px; height: 22px;
+      left: 14px; top: 50%;
+      width: 10px; height: 10px;
+      margin-top: -5px;
       border-radius: 50%;
-      background: var(--night);
+      background: var(--tag);
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.35);
     }
-    .ticket::before { top: -11px; }
-    .ticket::after { bottom: -11px; }
-    .ticket-main { padding: 20px 14px 22px 18px; border-right: 2px dashed #e3d4bf; }
-    .ticket-label { font-size: 0.72rem; font-weight: 900; letter-spacing: 0.22em; color: var(--accent); }
-    .ticket-label span { letter-spacing: 0.02em; color: var(--sub); margin-left: 6px; font-weight: 700; }
-    .fv h1 { margin-top: 8px; line-height: 1.35; font-weight: 900; }
-    .h1-a { display: block; font-size: 1.9rem; letter-spacing: -0.01em; }
-    .h1-a em { font-style: normal; color: #fff; background: var(--accent); padding: 0 6px; border-radius: 4px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
-    .h1-b { display: block; margin-top: 10px; font-size: 1.12rem; }
-    .h1-b b { color: var(--accent); }
-    .h1-c { display: block; font-size: 1.45rem; }
-    .ticket-stub {
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      background: linear-gradient(180deg, var(--accent), var(--accent-dark));
-      color: #fff;
-      border-radius: 0 18px 18px 0;
-      text-align: center;
-      line-height: 1.2;
-      padding: 10px 4px;
-    }
-    .ticket-stub small { font-size: 0.68rem; font-weight: 700; opacity: 0.9; }
-    .ticket-stub b { font-size: 2.6rem; font-weight: 900; line-height: 1.05; margin: 4px 0; }
-    .ticket-stub b span { font-size: 0.9rem; }
-    .fv-body { display: grid; grid-template-columns: 1fr; gap: 30px; align-items: center; margin-top: 34px; }
+    .price-tag small { display: block; font-size: 0.72rem; font-weight: 900; }
+    .price-tag b { display: block; font-family: 'Dela Gothic One', sans-serif; font-weight: 400; color: var(--red); font-size: 2.9rem; line-height: 1; margin: 2px 0; }
+    .price-tag b span { font-size: 1.05rem; }
+    .price-tag .strike { display: block; font-size: 0.7rem; font-weight: 700; color: var(--mute); }
 
+    .hero-body { display: grid; grid-template-columns: 1fr; gap: 28px; margin-top: 30px; }
     .phone {
       position: relative;
-      width: 250px;
-      height: 470px;
+      width: 240px;
+      height: 430px;
       margin: 0 auto;
-      border-radius: 36px;
+      border-radius: 34px;
       background: #111;
-      padding: 12px;
-      box-shadow: 0 24px 48px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.12);
+      padding: 11px;
+      box-shadow: 10px 12px 0 rgba(0,0,0,0.9);
     }
     .phone::before {
       content: '';
       position: absolute;
-      top: 12px; left: 50%;
+      top: 11px; left: 50%;
       transform: translateX(-50%);
-      width: 84px; height: 20px;
+      width: 80px; height: 19px;
       background: #111;
       border-radius: 0 0 12px 12px;
       z-index: 2;
     }
-    .phone-screen { width: 100%; height: 100%; border-radius: 26px; overflow: hidden; background: #dfe6ee; position: relative; color: var(--ink); }
-    .phone-head { position: absolute; top: 0; left: 0; right: 0; z-index: 1; background: #fff; padding: 30px 12px 8px; font-size: 0.66rem; font-weight: 700; text-align: center; border-bottom: 1px solid #e3e3e3; }
-    .phone-head small { display: block; font-weight: 500; color: #8b8f99; font-size: 0.58rem; }
-    .feed { padding: 72px 10px 10px; display: flex; flex-direction: column; gap: 10px; animation: feed 22s ease-in-out infinite alternate; }
-    @keyframes feed { 0%, 10% { transform: translateY(0); } 100% { transform: translateY(-58%); } }
+    .phone-screen { width: 100%; height: 100%; border-radius: 24px; overflow: hidden; background: #8c9fb5; position: relative; color: var(--ink); }
+    .phone-head { position: absolute; top: 0; left: 0; right: 0; z-index: 1; background: #fff; padding: 28px 12px 8px; font-size: 0.66rem; font-weight: 900; text-align: center; border-bottom: 1px solid #ddd; }
+    .phone-head small { display: block; font-weight: 500; color: var(--mute); font-size: 0.58rem; }
+    .feed { padding: 70px 10px 10px; display: flex; flex-direction: column; gap: 9px; animation: feed 22s ease-in-out infinite alternate; }
+    @keyframes feed { 0%, 10% { transform: translateY(0); } 100% { transform: translateY(-56%); } }
     @media (prefers-reduced-motion: reduce) { .feed { animation: none; } }
-    .mini { background: #fff; border-radius: 12px; padding: 8px 10px; font-size: 0.62rem; line-height: 1.5; box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+    .mini { background: #fff; border-radius: 4px 14px 14px 14px; padding: 8px 10px; font-size: 0.62rem; line-height: 1.5; }
     .mini-top { display: flex; gap: 8px; align-items: center; }
-    .mini-top img { width: 34px; height: 34px; border-radius: 8px; object-fit: cover; }
-    .mini-who { color: #8b8f99; font-size: 0.56rem; }
-    .mini-item { font-weight: 700; }
-    .mini-profit { margin-top: 4px; font-weight: 900; font-size: 0.82rem; color: var(--accent-dark); }
-    .mini-profit span { font-size: 0.56rem; color: #8b8f99; font-weight: 500; margin-right: 4px; }
-    .mini.reply { margin-left: 18px; background: #f3f5f8; box-shadow: none; }
-    .phone-tag {
-      position: absolute;
-      right: -14px; bottom: 60px;
-      background: #fff;
-      border-radius: 12px;
-      padding: 8px 12px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      line-height: 1.5;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-      z-index: 3;
-    }
-    .phone-tag b { color: var(--accent); font-size: 1rem; }
+    .mini-top img { width: 34px; height: 34px; border-radius: 6px; object-fit: cover; }
+    .mini-who { color: var(--mute); font-size: 0.56rem; }
+    .mini-item { font-weight: 900; }
+    .mini-profit { margin-top: 4px; font-family: 'Dela Gothic One', sans-serif; font-size: 0.86rem; color: var(--red); }
+    .mini-profit span { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 0.56rem; color: var(--mute); margin-right: 4px; font-weight: 700; }
+    .mini.reply { margin-left: 22px; background: #b3f19a; border-radius: 14px 4px 14px 14px; }
 
-    .fv-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 22px; }
-    .fv-fact { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 12px 6px; text-align: center; font-size: 0.72rem; color: rgba(255,255,255,0.72); line-height: 1.4; }
-    .fv-fact b { display: block; font-size: 1.25rem; color: #fff; font-weight: 900; }
-    .fv-fact b i { font-style: normal; color: var(--accent); }
-    .fv .cta-micro { color: #fff; }
-    .fv .cta-micro span { background: linear-gradient(transparent 62%, rgba(242,107,29,0.6) 62%); }
-    .fv .cta-note { color: rgba(255,255,255,0.65); }
+    .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 24px; }
+    .fact { background: #fff; border: 2px solid var(--ink); padding: 10px 4px 8px; text-align: center; line-height: 1.3; font-size: 0.7rem; font-weight: 700; }
+    .fact b { display: block; font-family: 'Dela Gothic One', sans-serif; font-weight: 400; font-size: 1.25rem; color: var(--ink); }
+    .fact b span { font-size: 0.72rem; }
 
     /* ===== 4 特典 ===== */
-    .gift-head { font-size: 0.95rem; color: var(--sub); margin-bottom: 18px; }
-    .gift-head b { color: var(--ink); }
-    .gifts { list-style: none; counter-reset: gift; border-top: 1px solid var(--line); }
-    .gifts li { counter-increment: gift; display: grid; grid-template-columns: 44px 1fr; gap: 4px 12px; padding: 16px 0; border-bottom: 1px solid var(--line); }
-    .gifts li::before {
-      content: counter(gift);
-      grid-row: span 2;
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: var(--accent-soft);
-      color: var(--accent-dark);
-      font-weight: 900;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .gifts b { font-size: 1rem; }
-    .gifts span { font-size: 0.86rem; color: var(--sub); }
+    .gift-lead { font-weight: 700; margin-bottom: 18px; }
+    .gifts { list-style: none; }
+    .gifts li { display: grid; grid-template-columns: 40px 1fr; gap: 2px 14px; padding: 14px 0; border-top: 2px dotted #cfcfcf; }
+    .gifts li:last-child { border-bottom: 2px dotted #cfcfcf; }
+    .gifts .no { grid-row: span 2; width: 40px; height: 40px; border-radius: 50%; background: var(--ink); color: var(--tag); font-family: 'Dela Gothic One', sans-serif; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; }
+    .gifts b { font-weight: 900; color: var(--ink); font-size: 1.02rem; line-height: 1.5; }
+    .gifts span { font-size: 0.86rem; color: var(--mute); }
 
-    /* ===== 5 中身：スクショ ===== */
-    .shots {
+    /* ===== 5 中身 ===== */
+    .tags { display: flex; flex-wrap: wrap; gap: 12px 10px; margin: 6px 0 26px; }
+    .tag {
+      position: relative;
+      background: var(--tag);
+      padding: 8px 14px 8px 26px;
+      clip-path: polygon(14px 0, 100% 0, 100% 100%, 14px 100%, 0 50%);
+      line-height: 1.2;
+      font-size: 0.72rem;
+      font-weight: 900;
+      color: var(--ink);
+    }
+    .tag::before { content: ''; position: absolute; left: 11px; top: 50%; width: 7px; height: 7px; margin-top: -3.5px; border-radius: 50%; background: var(--shelf); }
+    .tag b { display: block; font-family: 'Dela Gothic One', sans-serif; font-weight: 400; font-size: 1.3rem; color: var(--red); }
+    .tag:nth-child(2) { transform: rotate(-2deg); }
+    .tag:nth-child(3) { transform: rotate(1.5deg); }
+
+    .receipts {
       display: flex;
-      gap: 14px;
+      gap: 16px;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
-      padding: 8px 20px 20px;
-      margin: 28px -20px 0;
+      padding: 10px 20px 30px;
+      margin: 26px -20px 0;
       scrollbar-width: none;
     }
-    .shots::-webkit-scrollbar { display: none; }
-    .post {
-      flex: 0 0 82%;
-      max-width: 320px;
-      scroll-snap-align: center;
+    .receipts::-webkit-scrollbar { display: none; }
+    .receipt-wrap { flex: 0 0 80%; max-width: 310px; scroll-snap-align: center; filter: drop-shadow(0 3px 5px rgba(0,0,0,0.14)); }
+    .receipt {
+      position: relative;
       background: #fff;
-      border-radius: 20px;
-      padding: 18px 18px 16px;
-      box-shadow: 0 6px 20px rgba(31,35,48,0.08);
-      display: flex;
-      flex-direction: column;
+      padding: 18px 18px 26px;
+      /* 下の辺をレシートのギザギザにする */
+      -webkit-mask: linear-gradient(#000 0 0) top / 100% calc(100% - 9px) no-repeat, conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 16px 9px repeat-x;
+              mask: linear-gradient(#000 0 0) top / 100% calc(100% - 9px) no-repeat, conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 16px 9px repeat-x;
+      height: 100%;
     }
-    .post-head { display: flex; gap: 12px; align-items: center; }
-    .post-head img { width: 64px; height: 64px; border-radius: 12px; object-fit: cover; flex-shrink: 0; }
-    .post-who { font-size: 0.74rem; color: var(--sub); line-height: 1.5; }
-    .post-item { font-size: 0.95rem; font-weight: 700; line-height: 1.45; }
-    .post-profit { margin-top: 14px; display: flex; align-items: baseline; gap: 8px; }
-    .post-profit small { font-size: 0.78rem; color: var(--sub); }
-    .post-profit b { font-size: 2rem; font-weight: 900; color: var(--accent); line-height: 1.2; letter-spacing: -0.01em; }
-    .post-profit b span { font-size: 0.95rem; margin-left: 2px; }
-    .post-route { font-size: 0.84rem; color: var(--sub); margin-top: 2px; }
-    .post-quote { margin-top: 14px; padding: 12px 14px; background: var(--bg-warm); border-radius: 12px; font-size: 0.86rem; line-height: 1.75; flex: 1; }
-    .post-quote::before { content: '投稿より'; display: block; font-size: 0.7rem; font-weight: 700; color: var(--accent-dark); margin-bottom: 2px; }
-    .post-link { margin-top: 12px; font-size: 0.78rem; font-weight: 700; color: var(--sub); text-decoration: underline; text-underline-offset: 3px; }
-    .qa { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; flex: 1; }
-    .qa p { font-size: 0.85rem; line-height: 1.65; background: var(--bg-warm); border-radius: 14px 14px 14px 4px; padding: 10px 12px; }
-    .qa p.q { background: var(--ink); color: #fff; border-radius: 14px 14px 4px 14px; }
-    .qa p small { display: block; font-size: 0.7rem; opacity: 0.7; margin-bottom: 2px; }
-    .post .slot-empty { flex: 1; min-height: 300px; }
-    .slot-card { display: none; padding: 0; background: none; box-shadow: none; }
-    .is-preview .slot-card { display: flex; }
-    .swipe { text-align: center; font-size: 0.76rem; color: var(--sub); }
+    .r-store { text-align: center; font-weight: 900; font-size: 0.8rem; letter-spacing: 0.08em; color: var(--ink); padding-bottom: 8px; border-bottom: 2px dashed #bdbdbd; }
+    .r-item { display: flex; gap: 10px; align-items: center; margin: 12px 0 10px; }
+    .r-item img { width: 54px; height: 54px; object-fit: cover; border-radius: 4px; flex-shrink: 0; }
+    .r-item p { font-size: 0.9rem; font-weight: 900; color: var(--ink); line-height: 1.45; }
+    .r-item small { display: block; font-size: 0.72rem; font-weight: 500; color: var(--mute); }
+    .r-rows { font-size: 0.86rem; }
+    .r-row { display: flex; justify-content: space-between; padding: 2px 0; }
+    .r-total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 6px; padding-top: 8px; border-top: 2px solid var(--ink); }
+    .r-total span { font-weight: 900; color: var(--ink); }
+    .r-total b { font-family: 'Dela Gothic One', sans-serif; font-weight: 400; font-size: 1.9rem; color: var(--red); line-height: 1.1; }
+    .r-total b small { font-size: 0.9rem; }
+    .r-quote { margin-top: 12px; font-size: 0.84rem; line-height: 1.75; color: var(--body); }
+    .r-quote::before { content: '本人のひとこと'; display: block; font-size: 0.7rem; font-weight: 900; color: var(--red); }
+    .r-link { display: inline-block; margin-top: 10px; font-size: 0.76rem; font-weight: 700; color: var(--mute); text-decoration: underline; text-underline-offset: 3px; }
+    .sold {
+      position: absolute;
+      top: 38px;
+      right: 12px;
+      font-family: 'Dela Gothic One', sans-serif;
+      font-size: 1.1rem;
+      color: var(--red);
+      border: 3px solid var(--red);
+      border-radius: 6px;
+      padding: 0 8px;
+      transform: rotate(-14deg);
+      opacity: 0.85;
+      letter-spacing: 0.06em;
+    }
+    .chat { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+    .chat p { font-size: 0.86rem; line-height: 1.65; background: #f1f1f1; border-radius: 4px 16px 16px 16px; padding: 9px 12px; max-width: 92%; }
+    .chat p.me { align-self: flex-end; background: #b3f19a; border-radius: 16px 4px 16px 16px; }
+    .chat p small { display: block; font-size: 0.68rem; font-weight: 900; color: var(--mute); }
+    .swipe { text-align: center; font-size: 0.8rem; font-weight: 700; color: var(--mute); }
+    .receipt-wrap.slot-card { display: none; }
+    .is-preview .receipt-wrap.slot-card { display: block; }
+    .receipt-wrap .slot-empty { height: 100%; min-height: 380px; }
 
-    .days { margin-top: 40px; border-left: 3px solid var(--accent); padding-left: 18px; }
-    .days h3 { font-size: 1.05rem; margin-bottom: 12px; }
-    .days dl { display: grid; grid-template-columns: auto 1fr; gap: 10px 14px; font-size: 0.92rem; }
-    .days dt { font-weight: 900; color: var(--accent-dark); white-space: nowrap; }
-    .days dd { color: var(--sub); }
+    .days { margin-top: 36px; background: #fff; border: 3px solid var(--ink); padding: 18px 18px 16px; }
+    .days h3 { font-family: 'Dela Gothic One', sans-serif; font-weight: 400; color: var(--ink); font-size: 1.15rem; margin-bottom: 10px; }
+    .days dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; font-size: 0.92rem; }
+    .days dt { font-weight: 900; color: var(--red); white-space: nowrap; }
 
     /* ===== 6 実績 ===== */
-    .nums { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 24px; }
-    .num-card { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: #fff; border-radius: 14px; padding: 16px 10px; text-align: center; box-shadow: 0 8px 18px rgba(242,107,29,0.25); }
-    .num-card small { display: block; font-size: 0.74rem; opacity: 0.9; }
-    .num-card b { display: block; font-size: 1.6rem; font-weight: 900; line-height: 1.3; }
-    .num-card b span { font-size: 0.8rem; font-weight: 700; opacity: 0.9; }
-    .voice-quote {
-      margin-top: 28px;
-      background: var(--bg-warm);
-      border-radius: 18px;
-      padding: 22px 20px;
-    }
-    .voice-quote p { font-size: 0.95rem; line-height: 1.9; }
-    .voice-quote cite { display: block; margin-top: 10px; font-style: normal; font-size: 0.8rem; color: var(--sub); }
-    .report { margin-top: 16px; background: var(--bg-warm); border-radius: 18px; padding: 20px 18px; }
-    .report-title { font-size: 0.95rem; font-weight: 700; }
-    .report-sub { font-size: 0.84rem; color: var(--sub); margin-top: 4px; }
+    .results { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; margin-top: 8px; border-top: 3px solid var(--ink); }
+    .result { padding: 14px 6px 12px; text-align: center; border-bottom: 1px solid #d9d9d9; }
+    .result:nth-child(odd) { border-right: 1px solid #d9d9d9; }
+    .result small { display: block; font-size: 0.76rem; font-weight: 700; color: var(--mute); }
+    .result b { display: block; font-family: 'Dela Gothic One', sans-serif; font-weight: 400; font-size: 1.75rem; color: var(--red); line-height: 1.3; }
+    .result b span { font-size: 0.9rem; color: var(--ink); }
+    .result b i { font-style: normal; color: var(--mute); font-size: 1rem; }
+    .voice { margin-top: 30px; position: relative; padding: 4px 0 0 22px; border-left: 6px solid var(--tag); }
+    .voice p { font-size: 1rem; font-weight: 700; color: var(--ink); line-height: 1.9; }
+    .voice cite { display: block; margin-top: 8px; font-style: normal; font-size: 0.8rem; color: var(--mute); }
+    .report { margin-top: 26px; border: 3px solid var(--ink); padding: 18px; }
+    .report-title { font-weight: 900; color: var(--ink); }
+    .report-sub { font-size: 0.86rem; color: var(--mute); margin-top: 4px; }
     .report-weeks { margin-top: 14px; display: grid; gap: 6px; }
-    .report-week { display: grid; grid-template-columns: 7.5em 1fr auto; gap: 10px; align-items: center; font-size: 0.82rem; }
-    .report-week .bar { height: 8px; border-radius: 4px; background: var(--accent); }
-    .report-week b { font-variant-numeric: tabular-nums; }
-    .report-total { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-size: 0.86rem; }
-    .report-total b { color: var(--accent-dark); font-size: 1.1rem; }
-    .report .post-link { display: inline-block; }
+    .report-week { display: grid; grid-template-columns: 6.5em 1fr auto; gap: 10px; align-items: center; font-size: 0.82rem; font-weight: 700; }
+    .report-week .bar { height: 10px; background: var(--red); }
+    .report-total { margin-top: 12px; padding-top: 10px; border-top: 2px dashed #bdbdbd; display: flex; justify-content: space-between; align-items: baseline; font-weight: 900; color: var(--ink); }
+    .report-total b { font-family: 'Dela Gothic One', sans-serif; font-weight: 400; color: var(--red); font-size: 1.35rem; }
+    .report .r-link { margin-top: 8px; }
     .videos { display: grid; gap: 14px; margin-top: 16px; }
     .videos .slot-empty { aspect-ratio: 16 / 9; min-height: 0; }
-    .fine { margin-top: 16px; font-size: 0.74rem; color: #8b8f99; }
+    .fine { margin-top: 16px; font-size: 0.74rem; color: var(--mute); }
 
-    /* ===== 7 変わること ===== */
-    .changes { margin-top: 8px; }
-    .change { padding: 18px 0; border-bottom: 1px solid var(--line); }
-    .change:first-child { border-top: 1px solid var(--line); }
-    .change .before { font-size: 0.86rem; color: #9a9ea8; text-decoration: line-through; text-decoration-color: rgba(154,158,168,0.7); }
-    .change .after { font-size: 1.05rem; font-weight: 900; margin-top: 6px; padding-left: 24px; position: relative; }
-    .change .after::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: 900; }
+    /* ===== 7 変わること（値下げの見せ方） ===== */
+    .change { background: #fff; padding: 14px 16px; margin-top: 12px; border-left: 6px solid var(--red); }
+    .change .before { font-size: 0.86rem; color: var(--mute); text-decoration: line-through; text-decoration-color: var(--red); text-decoration-thickness: 2px; }
+    .change .after { font-size: 1.05rem; font-weight: 900; color: var(--ink); margin-top: 2px; line-height: 1.6; }
 
     /* ===== 8 ボタン2回目 ===== */
-    .final { background: radial-gradient(circle at 50% 0%, rgba(242,107,29,0.35), transparent 55%), var(--night); color: #fff; padding: 64px 0 72px; }
-    .final .h2 { color: #fff; text-align: center; }
-    .final .cta-micro { color: #fff; }
-    .final .cta-micro span { background: linear-gradient(transparent 62%, rgba(242,107,29,0.55) 62%); }
-    .final .cta-note { color: rgba(255,255,255,0.6); }
-    .join-box { max-width: 400px; margin: 28px auto 0; border: 1px solid rgba(255,255,255,0.18); border-radius: 16px; padding: 18px; text-align: center; }
-    .join-box p { font-size: 0.84rem; color: rgba(255,255,255,0.75); text-align: left; }
+    .final { background: var(--tag); padding: 60px 0 68px; text-align: center; }
+    .final .h2 { text-align: center; }
+    .join-note { max-width: 420px; margin: 22px auto 0; background: #fff; border: 2px solid var(--ink); padding: 14px 16px; font-size: 0.86rem; text-align: left; font-weight: 700; color: var(--ink); }
 
     /* ===== 9 プロフィール ===== */
-    .profile { display: grid; grid-template-columns: 1fr; gap: 20px; }
-    .profile img { width: 100%; border-radius: 18px; aspect-ratio: 494 / 420; object-fit: cover; }
-    .profile h3 { font-size: 1.3rem; font-weight: 900; }
-    .profile h3 small { font-size: 0.78rem; color: var(--sub); font-weight: 500; margin-left: 8px; }
-    .profile p { font-size: 0.92rem; color: var(--sub); margin-top: 8px; }
-    .profile p.kicker { color: var(--accent-dark); font-size: 0.78rem; margin: 0 0 6px; }
+    .profile { display: grid; grid-template-columns: 1fr; gap: 18px; }
+    .profile img { width: 100%; aspect-ratio: 494 / 420; object-fit: cover; }
+    .profile h3 { font-family: 'Dela Gothic One', sans-serif; font-weight: 400; color: var(--ink); font-size: 1.6rem; line-height: 1.3; }
+    .profile h3 small { font-family: 'Zen Kaku Gothic New', sans-serif; font-weight: 900; font-size: 0.8rem; background: var(--tag); padding: 2px 8px; margin-left: 8px; vertical-align: middle; }
+    .profile p { margin-top: 8px; font-size: 0.95rem; }
 
-    footer { text-align: center; font-size: 0.75rem; color: #8b8f99; padding: 24px 20px 110px; }
+    footer { text-align: center; font-size: 0.75rem; color: var(--mute); padding: 24px 20px 110px; }
 
     .sticky {
       position: fixed; left: 0; right: 0; bottom: 0;
       padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
-      background: rgba(255,255,255,0.94);
-      backdrop-filter: blur(8px);
-      border-top: 1px solid var(--line);
+      background: rgba(255,255,255,0.95);
+      border-top: 2px solid var(--ink);
       z-index: 50;
       transform: translateY(110%);
       transition: transform 0.25s;
     }
     .sticky.show { transform: translateY(0); }
-    .sticky .cta-btn { font-size: 1rem; padding: 13px 16px; box-shadow: 0 4px 0 var(--accent-dark); }
+    .sticky .btn-line { font-size: 1rem; padding: 13px 14px; }
 
     /* ===== 差し込み枠 ===== */
     .slot-empty { display: none; }
     .is-preview .slot-empty {
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
-      border: 2px dashed var(--accent);
-      background: repeating-linear-gradient(45deg, #fff8f1, #fff8f1 10px, #fff 10px, #fff 20px);
-      color: #a4480c;
-      border-radius: 18px;
+      border: 2px dashed var(--red);
+      background: repeating-linear-gradient(45deg, #fff6f6, #fff6f6 10px, #fff 10px, #fff 20px);
+      color: #a3000d;
       padding: 16px;
       text-align: center;
       font-size: 0.8rem;
@@ -369,21 +327,21 @@
     }
     .is-preview .slot-empty b { font-size: 0.88rem; }
     .preview-bar { display: none; }
-    .is-preview .preview-bar { display: block; position: sticky; top: 0; z-index: 60; background: #7a3d00; color: #fff; font-size: 0.78rem; padding: 8px 16px; text-align: center; }
+    .is-preview .preview-bar { display: block; position: sticky; top: 0; z-index: 60; background: #a3000d; color: #fff; font-size: 0.78rem; padding: 8px 16px; text-align: center; }
     [data-pending] { display: none; }
     .is-preview [data-pending] { display: grid; }
 
+    @media (max-width: 380px) {
+      .hero h1 .big { font-size: 3rem; }
+      .price-tag { width: 104px; }
+      .price-tag b { font-size: 2.5rem; }
+    }
     @media (min-width: 760px) {
-      .wrap { max-width: 720px; }
-      .fv { padding: 56px 0 64px; }
-      .h1-a { font-size: 2.4rem; }
-      .h1-b { font-size: 1.3rem; }
-      .h1-c { font-size: 1.8rem; }
-      .ticket { grid-template-columns: 1fr 120px; }
-      .ticket::before, .ticket::after { right: 109px; }
-      .fv-body { grid-template-columns: 1fr 260px; }
-      .phone { order: 2; }
-      .h2 { font-size: 1.8rem; }
+      .hero h1 .big { font-size: 4.6rem; }
+      .hero h1 .sub { font-size: 1.7rem; }
+      .price-tag { right: 20px; top: 40px; transform: rotate(8deg) scale(1.25); }
+      .hero-body { grid-template-columns: 250px 1fr; align-items: center; gap: 40px; }
+      .h2 { font-size: 2rem; }
       .profile { grid-template-columns: 240px 1fr; align-items: center; }
       .sticky { display: none; }
     }
@@ -394,22 +352,22 @@
 <div class="preview-bar">確認用の表示です。点線の枠は、画像・動画が届いたら差し込む場所です（通常のURLでは表示されません）</div>
 
 <!-- ===== 1 呼びかけ / 2 メインコピー / 3 ボタン1回目 ===== -->
-<header class="fv">
+<header class="hero">
+  <p class="hero-call">独学でせどりを続けていて、月10万に届いていない人へ</p>
   <div class="wrap">
-    <p class="fv-call">独学でせどりを続けていて、<br>月10万に届いていない人へ</p>
-    <div class="ticket">
-      <div class="ticket-main">
-        <p class="ticket-label">INVITATION<span>公式LINEの友だちへ</span></p>
-        <h1>
-          <span class="h1-a">7日間 <em>プロに聞き放題</em></span>
-          <span class="h1-b">毎日、<b>利益商品</b>が流れてくる</span>
-          <span class="h1-c">オープンチャットへ<br>ご招待します</span>
-        </h1>
+    <div class="hero-head">
+      <h1>
+        <span class="big">7日間<br><span class="red">プロに</span><br>聞き放題。</span>
+        <span class="sub"><u>毎日、利益商品が流れてくる</u><br><u>オープンチャットへご招待します</u></span>
+      </h1>
+      <div class="price-tag" aria-label="参加費0円、7日間">
+        <small>参加費</small>
+        <b>0<span>円</span></b>
+        <span class="strike">7日間</span>
       </div>
-      <div class="ticket-stub"><small>参加費</small><b>0<span>円</span></b><small>7日間</small></div>
     </div>
 
-    <div class="fv-body">
+    <div class="hero-body">
       <div class="phone" aria-hidden="true">
         <div class="phone-screen">
           <div class="phone-head">仕入れオープンチャット<small>今日の【利益商品紹介】</small></div>
@@ -424,15 +382,15 @@
         </div>
       </div>
       <div>
-        <div class="fv-facts">
-          <div class="fv-fact"><b><i>100</i>件+</b>毎月の<br>利益商品</div>
-          <div class="fv-fact"><b>平均<i>10</i>分</b>質問への<br>返信</div>
-          <div class="fv-fact"><b><i>全4</i>回</b>実践講座と<br>質問し放題</div>
+        <div class="facts">
+          <div class="fact"><b>100<span>件+</span></b>毎月の利益商品</div>
+          <div class="fact"><b>10<span>分</span></b>質問への返信<br>（平均）</div>
+          <div class="fact"><b>100<span>人+</span></b>一緒に仕入れる<br>生徒</div>
         </div>
         <div class="cta" id="top-cta">
-          <p class="cta-micro"><span>申し込みは、LINEに届いている</span><br><span>申し込みフォームから</span></p>
-          <a href="https://lin.ee/QtAyHww" class="cta-btn js-join">LINEに戻って申し込む</a>
-          <p class="cta-note">7日間の参加は無料です。入ってから、続けるかどうかを決めてください</p>
+          <p class="cta-micro">＼ 申し込みは、LINEに届いている申し込みフォームから ／</p>
+          <a href="https://lin.ee/QtAyHww" class="btn-line js-join"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.5s5.9-3.5 8-6c1.5-1.6 2-3.2 2-4.8C22 6.6 17.5 3 12 3z"/></svg>LINEに戻って申し込む</a>
+          <p class="cta-note">7日間の参加は無料です</p>
         </div>
       </div>
     </div>
@@ -440,77 +398,99 @@
 </header>
 
 <!-- ===== 4 参加特典 ===== -->
-<section class="section dark">
+<section class="block">
   <div class="wrap">
-    <p class="kicker" data-en="BONUS">参加した人全員に</p>
-    <h2 class="h2">YouTubeでは出していない<br>利益商品も、<em>参加者全員</em>に<br>渡します</h2>
-    <p class="gift-head">7日間の体験に申し込んだ人全員に、<b>5つの特典</b>をお渡しします。</p>
+    <h2 class="h2">YouTubeでは出していない<br>利益商品も、<br><span class="red">参加者全員</span>に渡します</h2>
+    <p class="gift-lead">7日間の体験に申し込んだ人全員に、5つの特典をお渡しします。</p>
     <ol class="gifts">
-      <li><b>最短で月10万を目指すロードマップ</b><span>何を、いつ、どの順番でやるかを1本にまとめたもの</span></li>
-      <li><b>初心者向け 利益商品リスト200選</b><span>最初の仕入れで参考にしやすい商品を200個</span></li>
-      <li><b>YouTubeでは出していない利益商品</b><span>動画で紹介すると店に人が集まってしまう商品</span></li>
-      <li><b>一撃1万円Over 利益商品リスト</b><span>1つ売れれば利益が1万円を超える商品だけ</span></li>
-      <li><b>ネット仕入れ 利益商品リスト</b><span>店に行けない日でも、家から仕入れられる商品</span></li>
+      <li><span class="no">1</span><b>最短で月10万を目指すロードマップ</b><span>何を、いつ、どの順番でやるかを1本にまとめたもの</span></li>
+      <li><span class="no">2</span><b>初心者向け 利益商品リスト200選</b><span>最初の仕入れで参考にしやすい商品を200個</span></li>
+      <li><span class="no">3</span><b>YouTubeでは出していない利益商品</b><span>動画で紹介すると店に人が集まってしまう商品</span></li>
+      <li><span class="no">4</span><b>一撃1万円Over 利益商品リスト</b><span>1つ売れれば利益が1万円を超える商品だけ</span></li>
+      <li><span class="no">5</span><b>ネット仕入れ 利益商品リスト</b><span>店に行けない日でも、家から仕入れられる商品</span></li>
     </ol>
   </div>
 </section>
 
 <!-- ===== 5 企画の中身 ===== -->
-<section class="section warm">
+<section class="block block-shelf">
   <div class="wrap">
-    <p class="kicker" data-en="INSIDE">オープンチャットの中身</p>
-    <h2 class="h2">月利100万の講師陣と、<br>100人以上の生徒から、<br><em>利益商品がバンバン届きます</em></h2>
-    <div class="stats">
-      <div class="stat"><b>100<span>人以上</span></b><small>オープンチャットの生徒</small></div>
-      <div class="stat"><b>月利100<span>万</span></b><small>しょうたたち講師陣</small></div>
-      <div class="stat"><b>月利50<span>万</span></b><small>を超える生徒も投稿</small></div>
+    <h2 class="h2">月利100万の講師陣と、<br>100人以上の生徒から、<br><span class="red">利益商品が<br>バンバン届きます</span></h2>
+    <div class="tags">
+      <div class="tag">オープンチャットの生徒<b>100人以上</b></div>
+      <div class="tag">しょうたたち講師陣<b>月利100万</b></div>
+      <div class="tag">投稿している生徒にも<b>月利50万超え</b></div>
     </div>
-    <div class="lead">
+    <div class="text">
       <p>独学のせどりで時間を取られるのは、仕入れそのものより「何を仕入れるか」を決めるところです。店で1つずつ相場を調べて、結局買わずに帰る日もあります。</p>
-      <p>このオープンチャットには100人以上の生徒がいます。月利100万円のしょうたたち講師陣に加えて、月利50万円を超える生徒たちも、仕入れて売れた商品を【利益商品紹介】として投稿しています。仕入れた店、値段、利益、なぜ買ったかまで書いてあるので、店に行く前に、だれかが実際に売った商品を見てから動けます。</p>
-      <p>投稿の最後には次の人を指名する決まりがあって、利益商品のバトンが毎日つながっていきます。</p>
+      <p>このオープンチャットでは、月利100万円のしょうたたち講師陣に加えて、月利50万円を超える生徒たちも、仕入れて売れた商品を【利益商品紹介】として投稿しています。仕入れた店、値段、利益、なぜ買ったかまで書いてあるので、店に行く前に、だれかが実際に売った商品を見てから動けます。</p>
     </div>
 
-    <!-- 実際のオープンチャットのスクショ（2026-09-25 受領）。顔出しの生徒の発言が届いたら .shot を足す -->
-    <div class="shots">
-      <article class="post">
-        <div class="post-head"><img src="img/thumb-bag.jpg" alt="RIPANIのシルバーのハンドバッグ" width="64" height="64"><div><div class="post-who">鉛筆さんの利益商品紹介</div><div class="post-item">RIPANI ハンドバッグ 2way</div></div></div>
-        <div class="post-profit"><small>利益</small><b>15,550<span>円</span></b></div>
-        <p class="post-route">トレファクで7,000円 → メルカリで26,000円</p>
-        <p class="post-quote">薄利になってしまうかもだけど、反応が良さそうだからいけるんじゃないかと思って仕入れました！</p>
-        <a class="post-link" href="img/share-bag.jpg" target="_blank" rel="noopener">実際の投稿を見る</a>
-      </article>
-      <article class="post">
-        <div class="post-who">生徒同士のやりとり</div>
-        <div class="qa">
-          <p class="q"><small>電灯さん</small>外注で出品〜梱包発送まで、いくらでお願いしていますか？</p>
-          <p><small>鉛筆さん</small>撮影出品、梱包発送で大体相場は1商品500〜600円くらいですね！</p>
-          <p><small>山さん</small>近所の方に手伝ってもらって、400円で写真撮影と梱包発送してもらってます！</p>
+    <!-- 実際の投稿（2026-09-25 受領のスクショから書き起こし）。顔出しの生徒の発言が届いたら .receipt-wrap を足す -->
+    <div class="receipts">
+      <div class="receipt-wrap"><article class="receipt">
+        <p class="r-store">トレファク 宮子</p>
+        <span class="sold">SOLD</span>
+        <div class="r-item"><img src="img/thumb-bag.jpg" alt="RIPANIのシルバーのハンドバッグ" width="54" height="54"><p>RIPANI ハンドバッグ 2way<small>鉛筆さんの利益商品紹介</small></p></div>
+        <div class="r-rows">
+          <div class="r-row"><span>仕入れ</span><span>7,000円</span></div>
+          <div class="r-row"><span>売値（メルカリ）</span><span>26,000円</span></div>
         </div>
-        <a class="post-link" href="img/qa-outsourcing.jpg" target="_blank" rel="noopener">実際のやりとりを見る</a>
-      </article>
-      <article class="post">
-        <div class="post-head"><img src="img/thumb-toy.jpg" alt="ホビーオフで仕入れた戦隊ロボのおもちゃ" width="64" height="64"><div><div class="post-who">りんごさんの利益商品紹介</div><div class="post-item">DX爆竜合体 アバレンオー・キラーオー</div></div></div>
-        <div class="post-profit"><small>利益</small><b>12,100<span>円</span></b></div>
-        <p class="post-route">ホビーオフで2体20,900円 → 合体させて出品</p>
-        <p class="post-quote">動作しないと書いてありますが念の為に確認。電池を入れたら動いたので動作品として販売しました</p>
-        <a class="post-link" href="img/share-toy.jpg" target="_blank" rel="noopener">実際の投稿を見る</a>
-      </article>
-      <article class="post">
-        <div class="post-head"><img src="img/thumb-piano.jpg" alt="オフハウスの店頭で7,700円の値札がついた電子ピアノ" width="64" height="64"><div><div class="post-who">チロルさんの利益商品紹介</div><div class="post-item">YAMAHA 電子ピアノ ピアジェーロ</div></div></div>
-        <div class="post-profit"><small>利益</small><b>5,320<span>円</span></b></div>
-        <p class="post-route">オフハウスで7,700円 → フリマサイトで販売</p>
-        <p class="post-quote">動作も問題なくスタンド、別売りペダルがついているので負けはないと感じ仕入れました</p>
-        <a class="post-link" href="img/share-piano.jpg" target="_blank" rel="noopener">実際の投稿を見る</a>
-      </article>
-      <article class="post">
-        <div class="post-head"><img src="img/thumb-wallet.jpg" alt="PRADAの黒の三つ折り財布" width="64" height="64"><div><div class="post-who">ロケットさんの利益商品紹介</div><div class="post-item">PRADA 三つ折り財布</div></div></div>
-        <div class="post-profit"><small>利益</small><b>5,080<span>円</span></b></div>
-        <p class="post-route">セカストオンラインで11,990円 → メルカリで20,000円</p>
-        <p class="post-quote">若干内側に使用感がありますが、破れなどなく、外観が綺麗だったので、少し金額が高いと感じつつ仕入れました！</p>
-        <a class="post-link" href="img/share-wallet.jpg" target="_blank" rel="noopener">実際の投稿を見る</a>
-      </article>
-      <article class="post slot-card"><div class="slot-empty"><b>顔出しの生徒の発言</b>リンタマさん・リュウジさん・キョウコさんなど<br>届いたらここに足す</div></article>
+        <div class="r-total"><span>利益</span><b>15,550<small>円</small></b></div>
+        <p class="r-quote">薄利になってしまうかもだけど、反応が良さそうだからいけるんじゃないかと思って仕入れました！</p>
+        <a class="r-link" href="img/share-bag.jpg" target="_blank" rel="noopener">実際の投稿を見る</a>
+      </article></div>
+
+      <div class="receipt-wrap"><article class="receipt">
+        <p class="r-store">生徒同士のやりとり</p>
+        <div class="chat">
+          <p><small>電灯さん</small>外注で出品〜梱包発送まで、いくらでお願いしていますか？</p>
+          <p class="me"><small>鉛筆さん</small>撮影出品、梱包発送で大体相場は1商品500〜600円くらいですね！</p>
+          <p class="me"><small>山さん</small>近所の方に手伝ってもらって、400円で写真撮影と梱包発送してもらってます！</p>
+        </div>
+        <a class="r-link" href="img/qa-outsourcing.jpg" target="_blank" rel="noopener">実際のやりとりを見る</a>
+      </article></div>
+
+      <div class="receipt-wrap"><article class="receipt">
+        <p class="r-store">ホビーオフ</p>
+        <span class="sold">SOLD</span>
+        <div class="r-item"><img src="img/thumb-toy.jpg" alt="ホビーオフで仕入れた戦隊ロボのおもちゃ" width="54" height="54"><p>DX爆竜合体 アバレンオー・キラーオー<small>りんごさんの利益商品紹介</small></p></div>
+        <div class="r-rows">
+          <div class="r-row"><span>仕入れ（2体）</span><span>20,900円</span></div>
+          <div class="r-row"><span>売り方</span><span>合体させて出品</span></div>
+        </div>
+        <div class="r-total"><span>利益</span><b>12,100<small>円</small></b></div>
+        <p class="r-quote">動作しないと書いてありますが念の為に確認。電池を入れたら動いたので動作品として販売しました</p>
+        <a class="r-link" href="img/share-toy.jpg" target="_blank" rel="noopener">実際の投稿を見る</a>
+      </article></div>
+
+      <div class="receipt-wrap"><article class="receipt">
+        <p class="r-store">オフハウス</p>
+        <span class="sold">SOLD</span>
+        <div class="r-item"><img src="img/thumb-piano.jpg" alt="オフハウスの店頭で7,700円の値札がついた電子ピアノ" width="54" height="54"><p>YAMAHA 電子ピアノ ピアジェーロ<small>チロルさんの利益商品紹介</small></p></div>
+        <div class="r-rows">
+          <div class="r-row"><span>仕入れ</span><span>7,700円</span></div>
+          <div class="r-row"><span>売り先</span><span>フリマサイト</span></div>
+        </div>
+        <div class="r-total"><span>利益</span><b>5,320<small>円</small></b></div>
+        <p class="r-quote">動作も問題なくスタンド、別売りペダルがついているので負けはないと感じ仕入れました</p>
+        <a class="r-link" href="img/share-piano.jpg" target="_blank" rel="noopener">実際の投稿を見る</a>
+      </article></div>
+
+      <div class="receipt-wrap"><article class="receipt">
+        <p class="r-store">セカストオンライン</p>
+        <span class="sold">SOLD</span>
+        <div class="r-item"><img src="img/thumb-wallet.jpg" alt="PRADAの黒の三つ折り財布" width="54" height="54"><p>PRADA 三つ折り財布<small>ロケットさんの利益商品紹介</small></p></div>
+        <div class="r-rows">
+          <div class="r-row"><span>仕入れ</span><span>11,990円</span></div>
+          <div class="r-row"><span>売値（メルカリ）</span><span>20,000円</span></div>
+        </div>
+        <div class="r-total"><span>利益</span><b>5,080<small>円</small></b></div>
+        <p class="r-quote">若干内側に使用感がありますが、破れなどなく、外観が綺麗だったので、少し金額が高いと感じつつ仕入れました！</p>
+        <a class="r-link" href="img/share-wallet.jpg" target="_blank" rel="noopener">実際の投稿を見る</a>
+      </article></div>
+
+      <div class="receipt-wrap slot-card"><div class="slot-empty"><b>顔出しの生徒の発言</b>リンタマさん・リュウジさん・キョウコさんなど<br>届いたらここに足す</div></div>
     </div>
     <p class="swipe">横にスワイプできます</p>
 
@@ -526,20 +506,19 @@
 </section>
 
 <!-- ===== 6 実績 ===== -->
-<section class="section">
+<section class="block">
   <div class="wrap">
-    <p class="kicker" data-en="MEMBERS">参加している人たち</p>
-    <h2 class="h2">数ヶ月前まで、<br><em>何を仕入れたらいいか</em><br>分からなかった人たちです</h2>
-    <div class="nums">
-      <div class="num-card"><small>参加1ヶ月目</small><b>0→12万<span>円</span></b></div>
-      <div class="num-card"><small>2ヶ月目</small><b>0→32万<span>円</span></b></div>
-      <div class="num-card"><small>3ヶ月目</small><b>0→67万<span>円</span></b></div>
-      <div class="num-card"><small>シフト制の会社員</small><b>月37万<span>円</span></b></div>
+    <h2 class="h2">数ヶ月前まで、<br><span class="red">何を仕入れたらいいか<br>分からなかった</span><br>人たちです</h2>
+    <div class="results">
+      <div class="result"><small>参加1ヶ月目</small><b><i>0→</i>12万<span>円</span></b></div>
+      <div class="result"><small>2ヶ月目</small><b><i>0→</i>32万<span>円</span></b></div>
+      <div class="result"><small>3ヶ月目</small><b><i>0→</i>67万<span>円</span></b></div>
+      <div class="result"><small>シフト制の会社員</small><b>月37万<span>円</span></b></div>
     </div>
 
-    <blockquote class="voice-quote">
+    <blockquote class="voice">
       <p>ブランドも知らなかったのですが、しっかり利益もとれて無事売れてくれたので、自分の仕入れに自信がつけられ、物販やっぱ楽しいーと思える商品でした</p>
-      <cite>7,000円のバッグで利益15,550円を出した生徒の投稿より</cite>
+      <cite>7,000円のバッグで利益15,550円を出した鉛筆さんの投稿より</cite>
     </blockquote>
 
     <div class="report">
@@ -551,7 +530,7 @@
         <div class="report-week"><span>9/12〜18</span><span class="bar" style="width:91%"></span><b>97,536円</b></div>
       </div>
       <div class="report-total"><span>9月の利益（25日時点）</span><b>243,555円</b></div>
-      <a class="post-link" href="img/weekly-report.jpg" target="_blank" rel="noopener">実際の週報を見る</a>
+      <a class="r-link" href="img/weekly-report.jpg" target="_blank" rel="noopener">実際の週報を見る</a>
     </div>
 
     <!-- 生徒インタビュー（10月以降に差し込み。届くまで通常のURLでは非表示） -->
@@ -566,16 +545,13 @@
 </section>
 
 <!-- ===== 7 変わること ===== -->
-<section class="section warm">
+<section class="block block-yellow">
   <div class="wrap">
-    <p class="kicker" data-en="CHANGE">ひとりの仕入れと、何が違うか</p>
-    <h2 class="h2">相場を調べる時間より、<br><em>売れた実例を見る時間</em>が長くなります</h2>
-    <div class="changes">
-      <div class="change"><p class="before">何を仕入れるか、毎回ひとりで調べてから店に行く</p><p class="after">生徒が実際に売った商品を見てから店に行ける</p></div>
-      <div class="change"><p class="before">店で「これ買っていいのかな」と迷って、買わずに帰る</p><p class="after">その場で聞いて、平均10分で返事が来る</p></div>
-      <div class="change"><p class="before">1,000〜3,000円の商品ばかりで、利益が残らない</p><p class="after">1つで利益1万円を超えた商品の実例に、毎日触れられる</p></div>
-      <div class="change"><p class="before">入る前の情報は、あとから追いかけられない</p><p class="after">【利益商品紹介】で検索すれば、過去の投稿もさかのぼれる</p></div>
-    </div>
+    <h2 class="h2">相場を調べる時間より、<br><span class="red">売れた実例を見る時間</span>が<br>長くなります</h2>
+    <div class="change"><p class="before">何を仕入れるか、毎回ひとりで調べてから店に行く</p><p class="after">生徒が実際に売った商品を見てから店に行ける</p></div>
+    <div class="change"><p class="before">店で「これ買っていいのかな」と迷って、買わずに帰る</p><p class="after">その場で聞いて、平均10分で返事が来る</p></div>
+    <div class="change"><p class="before">1,000〜3,000円の商品ばかりで、利益が残らない</p><p class="after">1つで利益1万円を超えた商品の実例に、毎日触れられる</p></div>
+    <div class="change"><p class="before">入る前の情報は、あとから追いかけられない</p><p class="after">【利益商品紹介】で検索すれば、過去の投稿もさかのぼれる</p></div>
   </div>
 </section>
 
@@ -584,24 +560,21 @@
   <div class="wrap">
     <h2 class="h2">まずは7日間、<br>中の投稿を見てみてください</h2>
     <div class="cta">
-      <p class="cta-micro"><span>申し込みは、LINEに届いている</span><br><span>申し込みフォームから</span></p>
-      <a href="https://lin.ee/QtAyHww" class="cta-btn js-join">LINEに戻って申し込む</a>
+      <p class="cta-micro">＼ 申し込みは、LINEに届いている申し込みフォームから ／</p>
+      <a href="https://lin.ee/QtAyHww" class="btn-line js-join"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.5s5.9-3.5 8-6c1.5-1.6 2-3.2 2-4.8C22 6.6 17.5 3 12 3z"/></svg>LINEに戻って申し込む</a>
       <p class="cta-note">7日間の参加は無料です</p>
     </div>
-    <div class="join-box">
-      <p>ボタンを押すと、しょうたの公式LINEが開きます。このページと一緒に届いているメッセージの申し込みフォームから申し込んでください。</p>
-    </div>
+    <p class="join-note">ボタンを押すと、しょうたの公式LINEが開きます。このページと一緒に届いているメッセージの申し込みフォームから申し込んでください。</p>
   </div>
 </section>
 
 <!-- ===== 9 プロフィール ===== -->
-<section class="section">
+<section class="block">
   <div class="wrap">
     <div class="profile">
       <img src="img/profile.jpg" alt="オープンチャットを運営するしょうた" width="494" height="420">
       <div>
-        <p class="kicker">このオープンチャットを運営しています</p>
-        <h3>しょうた<small>月100万プレイヤー</small></h3>
+        <h3>しょうた<small>月利100万プレイヤー</small></h3>
         <p>自分でも店舗仕入れを続けながら、YouTubeでせどりの仕入れを発信しています。このオープンチャットでは、生徒の仕入れを毎日見て、質問に答えています。</p>
       </div>
     </div>
@@ -610,7 +583,7 @@
 
 <footer>&copy; 2026 しょうた</footer>
 
-<div class="sticky" id="sticky"><a href="https://lin.ee/QtAyHww" class="cta-btn js-join">LINEに戻って申し込む</a></div>
+<div class="sticky" id="sticky"><a href="https://lin.ee/QtAyHww" class="btn-line js-join"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.5s5.9-3.5 8-6c1.5-1.6 2-3.2 2-4.8C22 6.6 17.5 3 12 3z"/></svg>LINEに戻って申し込む</a></div>
 
 <script>
   // 申込：ボタンは翔太さんの公式LINEを開く。申込フォームはLINEの配信で送っている
