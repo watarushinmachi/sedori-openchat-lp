@@ -56,6 +56,21 @@
     .text p { font-size: 1rem; }
     .text p + p { margin-top: 14px; }
 
+    /* ===== 装飾 ===== */
+    .label { display: inline-block; font-size: 0.78rem; font-weight: 700; color: var(--red); border: 1.5px solid var(--red); border-radius: 999px; padding: 2px 12px; margin-bottom: 12px; background: #fff; }
+    .h2::before { content: ''; display: block; width: 36px; height: 4px; background: var(--red); border-radius: 2px; margin-bottom: 14px; }
+    .h2 .red { background: linear-gradient(transparent 70%, var(--tag) 70%); }
+    .block-shelf { position: relative; }
+    .block-shelf::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 10px;
+      background:
+        linear-gradient(135deg, #fff 50%, transparent 50%) 0 0 / 16px 10px repeat-x,
+        linear-gradient(225deg, #fff 50%, transparent 50%) 0 0 / 16px 10px repeat-x;
+    }
+    .free { display: inline-block; background: #fff; color: var(--line-dark); font-size: 0.72rem; font-weight: 900; border-radius: 4px; padding: 1px 6px; margin-right: 2px; }
+
     /* ===== LINEボタン ===== */
     .cta { text-align: center; }
     .cta-micro { font-weight: 900; font-size: 0.98rem; color: var(--ink); margin-bottom: 10px; line-height: 1.6; }
@@ -81,7 +96,18 @@
     .cta-note { margin-top: 12px; font-size: 0.84rem; font-weight: 700; color: var(--ink); }
 
     /* ===== 1〜3 ファーストビュー ===== */
-    .hero { background: #fff; padding: 0 0 44px; overflow: hidden; position: relative; }
+    .hero {
+      padding: 0 0 44px;
+      overflow: hidden;
+      position: relative;
+      background:
+        radial-gradient(circle at 92% 18%, rgba(255,225,80,0.45), transparent 38%),
+        radial-gradient(circle at 0% 70%, rgba(255,225,80,0.25), transparent 35%),
+        radial-gradient(rgba(0,0,0,0.07) 1px, transparent 1px) 0 0 / 14px 14px,
+        #fff;
+    }
+    .hero-badge { display: inline-block; background: var(--red); color: #fff; font-size: 0.8rem; font-weight: 700; padding: 4px 12px; border-radius: 4px; margin-bottom: 14px; position: relative; }
+    .hero-badge::after { content: ''; position: absolute; left: 18px; bottom: -6px; border: 6px solid transparent; border-bottom: 0; border-top-color: var(--red); }
     .hero-call {
       background: var(--ink);
       color: #fff;
@@ -94,13 +120,13 @@
     .hero-head { position: relative; padding-top: 28px; }
     .hero h1 { font-family: 'Noto Sans JP', sans-serif; font-weight: 900; color: var(--ink); line-height: 1.12; }
     .hero h1 .big { display: block; font-size: 2.9rem; letter-spacing: 0; line-height: 1.2; }
-    .hero h1 .big .red { color: var(--red); }
+    .hero h1 .big .red { color: var(--red); background: linear-gradient(transparent 72%, var(--tag) 72%); }
     .hero h1 .sub { display: block; margin-top: 16px; font-size: 1.2rem; font-weight: 700; line-height: 1.6; }
     .hero h1 .sub u { text-decoration: none; background: linear-gradient(transparent 60%, var(--tag) 60%); }
 
     .price-tag {
       position: absolute;
-      top: 34px;
+      top: 70px;
       right: -4px;
       width: 116px;
       padding: 12px 6px 12px 22px;
@@ -164,16 +190,19 @@
     .mini.reply { margin-left: 22px; background: #b3f19a; border-radius: 14px 4px 14px 14px; }
 
     .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 24px; }
-    .fact { background: #fff; border: 1px solid #dedede; border-radius: 8px; padding: 10px 4px 8px; text-align: center; line-height: 1.3; font-size: 0.7rem; font-weight: 700; }
+    .fact { background: #fff; border: 1px solid #dedede; border-top: 3px solid var(--red); border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); padding: 10px 4px 8px; text-align: center; line-height: 1.3; font-size: 0.7rem; font-weight: 700; }
     .fact b { display: block; font-family: 'Noto Sans JP', sans-serif; font-weight: 900; font-size: 1.25rem; color: var(--ink); }
     .fact b span { font-size: 0.72rem; }
 
     /* ===== 4 特典 ===== */
-    .gift-lead { font-weight: 700; margin-bottom: 18px; }
+    .gift-box { border: 2px solid var(--ink); border-radius: 12px; padding: 0 18px 8px; overflow: hidden; background: #fff; box-shadow: 6px 6px 0 var(--tag); }
+    .gift-band { margin: 0 -18px 14px; background: var(--ink); color: #fff; text-align: center; font-weight: 900; padding: 8px 0; letter-spacing: 0.08em; }
+    .gift-lead { font-weight: 700; margin-bottom: 10px; font-size: 0.92rem; }
+    .gift-box .gifts li:last-child { border-bottom: 0; }
     .gifts { list-style: none; }
     .gifts li { display: grid; grid-template-columns: 40px 1fr; gap: 2px 14px; padding: 14px 0; border-top: 2px dotted #cfcfcf; }
     .gifts li:last-child { border-bottom: 2px dotted #cfcfcf; }
-    .gifts .no { grid-row: span 2; width: 40px; height: 40px; border-radius: 50%; background: var(--ink); color: #fff; font-family: 'Noto Sans JP', sans-serif; font-weight: 900; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; }
+    .gifts .no { grid-row: span 2; width: 40px; height: 40px; border-radius: 50%; background: var(--red); color: #fff; font-family: 'Noto Sans JP', sans-serif; font-weight: 900; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; }
     .gifts b { font-weight: 900; color: var(--ink); font-size: 1.02rem; line-height: 1.5; }
     .gifts span { font-size: 0.86rem; color: var(--mute); }
 
@@ -256,9 +285,8 @@
     .days dt { font-weight: 900; color: var(--red); white-space: nowrap; }
 
     /* ===== 6 実績 ===== */
-    .results { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; margin-top: 8px; border-top: 2px solid var(--ink); }
-    .result { padding: 14px 6px 12px; text-align: center; border-bottom: 1px solid #d9d9d9; }
-    .result:nth-child(odd) { border-right: 1px solid #d9d9d9; }
+    .results { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 8px; }
+    .result { padding: 14px 6px 12px; text-align: center; background: #fff8d6; border-radius: 10px; border: 1px solid #f1e3a0; }
     .result small { display: block; font-size: 0.76rem; font-weight: 700; color: var(--mute); }
     .result b { display: block; font-family: 'Noto Sans JP', sans-serif; font-weight: 900; font-size: 1.75rem; color: var(--red); line-height: 1.3; }
     .result b span { font-size: 0.9rem; color: var(--ink); }
@@ -285,7 +313,8 @@
     .change .after { font-size: 1.05rem; font-weight: 900; color: var(--ink); margin-top: 2px; line-height: 1.6; }
 
     /* ===== 8 ボタン2回目 ===== */
-    .final { background: #fff; padding: 60px 0 40px; text-align: center; }
+    .final { background: radial-gradient(circle at 50% 0%, rgba(255,225,80,0.4), transparent 55%), #fff; padding: 60px 0 40px; text-align: center; }
+    .final .h2::before { margin-left: auto; margin-right: auto; }
     .final .h2 { text-align: center; }
     .join-note { max-width: 420px; margin: 22px auto 0; background: #fff; border: 1px solid #dedede; border-radius: 8px; padding: 14px 16px; font-size: 0.86rem; text-align: left; font-weight: 700; color: var(--ink); }
 
@@ -354,6 +383,7 @@
   <p class="hero-call">独学でせどりを続けていて、月10万に届いていない人へ</p>
   <div class="wrap">
     <div class="hero-head">
+      <p class="hero-badge">公式LINEの友だちだけのご招待</p>
       <h1>
         <span class="big">7日間<br><span class="red">プロに</span><br>聞き放題。</span>
         <span class="sub"><u>毎日、利益商品が流れてくる</u><br><u>オープンチャットへご招待します</u></span>
@@ -387,7 +417,7 @@
         </div>
         <div class="cta" id="top-cta">
           <p class="cta-micro">＼ 申し込みは、LINEに届いている申し込みフォームから ／</p>
-          <a href="https://lin.ee/QtAyHww" class="btn-line js-join"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.5s5.9-3.5 8-6c1.5-1.6 2-3.2 2-4.8C22 6.6 17.5 3 12 3z"/></svg>LINEに戻って申し込む</a>
+          <a href="https://lin.ee/QtAyHww" class="btn-line js-join"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.5s5.9-3.5 8-6c1.5-1.6 2-3.2 2-4.8C22 6.6 17.5 3 12 3z"/></svg><span class="free">無料</span>LINEに戻って申し込む</a>
           <p class="cta-note">7日間の参加は無料です</p>
         </div>
       </div>
@@ -398,7 +428,10 @@
 <!-- ===== 4 参加特典 ===== -->
 <section class="block">
   <div class="wrap">
+    <p class="label">参加特典</p>
     <h2 class="h2">YouTubeでは出していない<br>利益商品も、<br><span class="red">参加者全員</span>に渡します</h2>
+    <div class="gift-box">
+    <p class="gift-band">参加者全員にプレゼント</p>
     <p class="gift-lead">7日間の体験に申し込んだ人全員に、5つの特典をお渡しします。</p>
     <ol class="gifts">
       <li><span class="no">1</span><b>最短で月10万を目指すロードマップ</b><span>何を、いつ、どの順番でやるかを1本にまとめたもの</span></li>
@@ -407,12 +440,14 @@
       <li><span class="no">4</span><b>一撃1万円Over 利益商品リスト</b><span>1つ売れれば利益が1万円を超える商品だけ</span></li>
       <li><span class="no">5</span><b>ネット仕入れ 利益商品リスト</b><span>店に行けない日でも、家から仕入れられる商品</span></li>
     </ol>
+    </div>
   </div>
 </section>
 
 <!-- ===== 5 企画の中身 ===== -->
 <section class="block block-shelf">
   <div class="wrap">
+    <p class="label">オープンチャットの中身</p>
     <h2 class="h2">月利100万の講師陣と、<br>100人以上の生徒から、<br><span class="red">利益商品が<br>バンバン届きます</span></h2>
     <div class="tags">
       <div class="tag">オープンチャットの生徒<b>100人以上</b></div>
@@ -506,6 +541,7 @@
 <!-- ===== 6 実績 ===== -->
 <section class="block">
   <div class="wrap">
+    <p class="label">参加している人たち</p>
     <h2 class="h2">数ヶ月前まで、<br><span class="red">何を仕入れたらいいか<br>分からなかった</span><br>人たちです</h2>
     <div class="results">
       <div class="result"><small>参加1ヶ月目</small><b><i>0→</i>12万<span>円</span></b></div>
@@ -545,6 +581,7 @@
 <!-- ===== 7 変わること ===== -->
 <section class="block block-shelf">
   <div class="wrap">
+    <p class="label">ひとりの仕入れとの違い</p>
     <h2 class="h2">相場を調べる時間より、<br><span class="red">売れた実例を見る時間</span>が<br>長くなります</h2>
     <div class="change"><p class="before">何を仕入れるか、毎回ひとりで調べてから店に行く</p><p class="after">生徒が実際に売った商品を見てから店に行ける</p></div>
     <div class="change"><p class="before">店で「これ買っていいのかな」と迷って、買わずに帰る</p><p class="after">その場で聞いて、平均10分で返事が来る</p></div>
@@ -559,7 +596,7 @@
     <h2 class="h2">まずは7日間、<br>中の投稿を見てみてください</h2>
     <div class="cta">
       <p class="cta-micro">＼ 申し込みは、LINEに届いている申し込みフォームから ／</p>
-      <a href="https://lin.ee/QtAyHww" class="btn-line js-join"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.5s5.9-3.5 8-6c1.5-1.6 2-3.2 2-4.8C22 6.6 17.5 3 12 3z"/></svg>LINEに戻って申し込む</a>
+      <a href="https://lin.ee/QtAyHww" class="btn-line js-join"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.5s5.9-3.5 8-6c1.5-1.6 2-3.2 2-4.8C22 6.6 17.5 3 12 3z"/></svg><span class="free">無料</span>LINEに戻って申し込む</a>
       <p class="cta-note">7日間の参加は無料です</p>
     </div>
     <p class="join-note">ボタンを押すと、しょうたの公式LINEが開きます。このページと一緒に届いているメッセージの申し込みフォームから申し込んでください。</p>
@@ -581,7 +618,7 @@
 
 <footer>&copy; 2026 しょうた</footer>
 
-<div class="sticky" id="sticky"><a href="https://lin.ee/QtAyHww" class="btn-line js-join"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.5s5.9-3.5 8-6c1.5-1.6 2-3.2 2-4.8C22 6.6 17.5 3 12 3z"/></svg>LINEに戻って申し込む</a></div>
+<div class="sticky" id="sticky"><a href="https://lin.ee/QtAyHww" class="btn-line js-join"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.5s5.9-3.5 8-6c1.5-1.6 2-3.2 2-4.8C22 6.6 17.5 3 12 3z"/></svg><span class="free">無料</span>LINEに戻って申し込む</a></div>
 
 <script>
   // 申込：ボタンは翔太さんの公式LINEを開く。申込フォームはLINEの配信で送っている
