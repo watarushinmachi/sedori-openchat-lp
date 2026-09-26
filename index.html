@@ -15,7 +15,7 @@
     差し込み枠（.slot-empty）
     - 通常のURL：中身の無い枠は表示しない
     - 末尾に ?preview=1：枠を点線で出す（翔太さん確認用）
-    申込ボタンは、ファイル末尾の LINE_ID（翔太さんの公式LINEのベーシックID）を入れると有効になる。
+    申込ボタンは翔太さんの公式LINE（JOIN_URL）を開く。申込そのものは、LP と同じ配信で送る申し込みフォームで受ける。
   -->
   <style>
     :root {
@@ -261,9 +261,7 @@
     .final .cta-micro span { background: linear-gradient(transparent 62%, rgba(242,107,29,0.55) 62%); }
     .final .cta-note { color: rgba(255,255,255,0.6); }
     .join-box { max-width: 400px; margin: 28px auto 0; border: 1px solid rgba(255,255,255,0.18); border-radius: 16px; padding: 18px; text-align: center; }
-    .join-box p { font-size: 0.84rem; color: rgba(255,255,255,0.75); }
-    .join-word { display: inline-block; margin: 10px 0 12px; background: #fff; color: var(--ink); font-weight: 900; font-size: 1.25rem; padding: 4px 22px; border-radius: 8px; letter-spacing: 0.05em; }
-    .copy-btn { display: block; width: 100%; background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.4); border-radius: 999px; padding: 10px; font: inherit; font-size: 0.86rem; cursor: pointer; }
+    .join-box p { font-size: 0.84rem; color: rgba(255,255,255,0.75); text-align: left; }
 
     /* ===== 9 プロフィール ===== */
     .profile { display: grid; grid-template-columns: 1fr; gap: 20px; }
@@ -354,9 +352,9 @@
           <div class="fv-fact"><b>0円</b>7日間の<br>参加費</div>
         </div>
         <div class="cta" id="top-cta">
-          <p class="cta-micro"><span>公式LINEに「体験参加」と送るだけ。</span><br>入り方と5大特典がLINEで届きます</p>
-          <a href="#join" class="cta-btn js-join">オープンチャットに入ってみる</a>
-          <p class="cta-note">入ってから、続けるかどうかを決めてください</p>
+          <p class="cta-micro"><span>申し込みは、LINEに届いている</span><br><span>申し込みフォームから</span></p>
+          <a href="https://lin.ee/QtAyHww" class="cta-btn js-join">LINEに戻って申し込む</a>
+          <p class="cta-note">7日間の参加は無料です。入ってから、続けるかどうかを決めてください</p>
         </div>
       </div>
     </div>
@@ -367,8 +365,8 @@
 <section class="section">
   <div class="wrap">
     <p class="kicker">参加した人全員に</p>
-    <h2 class="h2">YouTubeでは出していない利益商品も、<br><em>入った日</em>に受け取れます</h2>
-    <p class="gift-head">公式LINEに「体験参加」と送った人に、<b>5つの特典</b>をお渡しします。</p>
+    <h2 class="h2">YouTubeでは出していない利益商品も、<br><em>参加者全員</em>に渡します</h2>
+    <p class="gift-head">7日間の体験に申し込んだ人全員に、<b>5つの特典</b>をお渡しします。</p>
     <ol class="gifts">
       <li><b>最短で月10万を目指すロードマップ</b><span>何を、いつ、どの順番でやるかを1本にまとめたもの</span></li>
       <li><b>初心者向け 利益商品リスト200選</b><span>最初の仕入れで参考にしやすい商品を200個</span></li>
@@ -502,14 +500,12 @@
   <div class="wrap">
     <h2 class="h2">まずは7日間、<br>中の投稿を見てみてください</h2>
     <div class="cta">
-      <p class="cta-micro"><span>公式LINEに「体験参加」と送るだけ。</span><br>入り方と5大特典がLINEで届きます</p>
-      <a href="#join" class="cta-btn js-join">オープンチャットに入ってみる</a>
+      <p class="cta-micro"><span>申し込みは、LINEに届いている</span><br><span>申し込みフォームから</span></p>
+      <a href="https://lin.ee/QtAyHww" class="cta-btn js-join">LINEに戻って申し込む</a>
       <p class="cta-note">7日間の参加は無料です</p>
     </div>
     <div class="join-box">
-      <p>ボタンでLINEが開かない時は、しょうたの公式LINEにこの言葉を送ってください</p>
-      <span class="join-word js-word">体験参加</span>
-      <button type="button" class="copy-btn js-copy">「体験参加」をコピーする</button>
+      <p>ボタンを押すと、しょうたの公式LINEが開きます。このページと一緒に届いているメッセージの申し込みフォームから申し込んでください。</p>
     </div>
   </div>
 </section>
@@ -530,28 +526,12 @@
 
 <footer>&copy; 2026 しょうた</footer>
 
-<div class="sticky" id="sticky"><a href="#join" class="cta-btn js-join">オープンチャットに入ってみる</a></div>
+<div class="sticky" id="sticky"><a href="https://lin.ee/QtAyHww" class="cta-btn js-join">LINEに戻って申し込む</a></div>
 
 <script>
-  // 申込：ボタンを押すと、公式LINEのトーク画面が「体験参加」入力済みで開く
-  // LINE_ID に翔太さんの公式LINEのベーシックID（@から始まる）を入れる。空の間はページ下の申込欄へ移動する
-  var LINE_ID = '';
-  var KEYWORD = '体験参加';
-  if (LINE_ID) {
-    var url = 'https://line.me/R/oaMessage/' + encodeURIComponent(LINE_ID) + '/?' + encodeURIComponent(KEYWORD);
-    document.querySelectorAll('.js-join').forEach(function (a) { a.href = url; });
-  }
-  document.querySelectorAll('.js-word').forEach(function (el) { el.textContent = KEYWORD; });
-  document.querySelectorAll('.js-copy').forEach(function (btn) {
-    btn.textContent = '「' + KEYWORD + '」をコピーする';
-    btn.addEventListener('click', function () {
-      navigator.clipboard.writeText(KEYWORD).then(function () {
-        btn.textContent = 'コピーしました。公式LINEに貼って送ってください';
-      }, function () {
-        btn.textContent = '公式LINEに「' + KEYWORD + '」と入力して送ってください';
-      });
-    });
-  });
+  // 申込：ボタンは翔太さんの公式LINEを開く。申込フォームはLINEの配信で送っている
+  var JOIN_URL = 'https://lin.ee/QtAyHww';
+  document.querySelectorAll('.js-join').forEach(function (a) { a.href = JOIN_URL; });
   // 追従ボタン：最初のボタンが見えなくなってから、最後の申込欄が見えるまで出す
   (function () {
     var sticky = document.getElementById('sticky');
