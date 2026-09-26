@@ -50,6 +50,7 @@
     .block { padding: 64px 0; }
     .block-yellow { background: var(--tag); }
     .block-shelf { background: var(--shelf); }
+    .block-warm { background: #fffbea; }
 
     .h2 { font-family: 'Noto Sans JP', sans-serif; font-weight: 900; color: var(--ink); font-size: 1.45rem; line-height: 1.55; margin-bottom: 22px; }
     .h2 .red { color: var(--red); }
@@ -284,6 +285,15 @@
     .days dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; font-size: 0.92rem; }
     .days dt { font-weight: 900; color: var(--red); white-space: nowrap; }
 
+    /* ===== 5.5 仲間 ===== */
+    .talk { margin-top: 26px; background: #8c9fb5; border-radius: 16px; padding: 16px 12px 18px; }
+    .talk-head { text-align: center; font-size: 0.72rem; font-weight: 700; color: #fff; margin-bottom: 12px; }
+    .talk-head span { background: rgba(0,0,0,0.18); border-radius: 999px; padding: 2px 12px; }
+    .talk-msg { display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 10px; }
+    .talk-msg small { font-size: 0.68rem; color: #fff; margin: 0 0 2px 6px; font-weight: 700; }
+    .talk-msg p { background: #fff; border-radius: 4px 16px 16px 16px; padding: 8px 12px; font-size: 0.88rem; line-height: 1.6; max-width: 88%; color: var(--ink); }
+    .talk-note { margin-top: 12px; font-size: 0.76rem; color: var(--mute); }
+
     /* ===== 6 実績 ===== */
     .results { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 8px; }
     .result { padding: 14px 6px 12px; text-align: center; background: #fff8d6; border-radius: 10px; border: 1px solid #f1e3a0; }
@@ -413,7 +423,7 @@
         <div class="facts">
           <div class="fact"><b>100<span>件+</span></b>毎月の利益商品</div>
           <div class="fact"><b>10<span>分</span></b>質問への返信<br>（平均）</div>
-          <div class="fact"><b>100<span>人+</span></b>一緒に仕入れる<br>生徒</div>
+          <div class="fact"><b>100<span>人+</span></b>一緒に仕入れる<br>仲間</div>
         </div>
         <div class="cta" id="top-cta">
           <p class="cta-micro">＼ 申し込みは、LINEに届いている申し込みフォームから ／</p>
@@ -538,6 +548,30 @@
   </div>
 </section>
 
+<!-- ===== 5.5 仲間 ===== -->
+<section class="block block-warm">
+  <div class="wrap">
+    <p class="label">仲間</p>
+    <h2 class="h2">利益商品だけじゃなく、<br><span class="red">一緒に仕入れる仲間</span>が<br>できます</h2>
+    <div class="text">
+      <p>このオープンチャットには、利益商品の話だけでなく雑談も毎日流れています。だれかが利益を出せば「おめでとうございます」と声がかかり、メルカリのキャンペーンで大型商品が対象外だと分かれば、みんなで悔しがる。休日の過ごし方を報告する人もいます。</p>
+      <p>ひとりで続けていると、利益が出た日も、うまくいかなかった週も、話す相手がいません。ここには同じようにせどりを続けている人が100人以上いて、お互いの結果を見ながら高め合っています。大人になってから、同じことに本気で取り組む友だちができる場所は多くありません。</p>
+    </div>
+
+    <!-- 2026-09-25 受領のスクショから、雑談の部分を書き起こし -->
+    <div class="talk" aria-label="オープンチャットでの雑談の例">
+      <p class="talk-head"><span>オープンチャットの雑談より</span></p>
+      <div class="talk-msg"><small>電球さん</small><p>爆益おめでとうございます。日付も割と近い。素晴らしい</p></div>
+      <div class="talk-msg"><small>電灯さん</small><p>くっそ〜！メルカリセコイ。大型なしだよ</p></div>
+      <div class="talk-msg"><small>鉛筆さん</small><p>ほんとですよ。おお！きた？！てぬか喜びしましたよ</p></div>
+      <div class="talk-msg"><small>どんぐりさん</small><p>せめて上限なしなら…あ、デカオモだから関係なかった…</p></div>
+      <div class="talk-msg"><small>鉛筆さん</small><p>小さい物攻めましょ！！！！笑笑</p></div>
+      <div class="talk-msg"><small>チューリップさん</small><p>おはようございます。シルバーウィーク最終日。孫と遊びながら、コメントセールしたり、SEOしたり。いつでも何処でも仕事できる。みなさんも充実した1日を！</p></div>
+    </div>
+    <p class="talk-note">実際のやりとりを、読みやすいように句読点だけ整えて載せています。</p>
+  </div>
+</section>
+
 <!-- ===== 6 実績 ===== -->
 <section class="block">
   <div class="wrap">
@@ -587,6 +621,7 @@
     <div class="change"><p class="before">店で「これ買っていいのかな」と迷って、買わずに帰る</p><p class="after">その場で聞いて、平均10分で返事が来る</p></div>
     <div class="change"><p class="before">1,000〜3,000円の商品ばかりで、利益が残らない</p><p class="after">1つで利益1万円を超えた商品の実例に、毎日触れられる</p></div>
     <div class="change"><p class="before">入る前の情報は、あとから追いかけられない</p><p class="after">【利益商品紹介】で検索すれば、過去の投稿もさかのぼれる</p></div>
+    <div class="change"><p class="before">利益が出ても、うまくいかなくても、話す相手がいない</p><p class="after">喜びも悔しさも言い合える仕入れ仲間ができる</p></div>
   </div>
 </section>
 
